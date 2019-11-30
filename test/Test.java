@@ -1,0 +1,75 @@
+//STEP 1. Import required packages
+import java.sql.*;
+
+public class FirstExample {
+   // JDBC driver name and database URL
+   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+   static final String DB_URL = "jdbc:mysql://remotemysql.com:3306/?user=7nVxZhInjB";
+
+   //  Database credentials
+   static final String USER = "7nVxZhInjB";
+   static final String PASS = "J2q22YGyY6";
+   
+   public static void main(String[] args) {
+   Connection conn = null;
+   Statement stmt = null;
+   try{
+      //STEP 2: Register JDBC driver
+      Class.forName("com.mysql.jdbc.Driver");
+
+      //STEP 3: Open a connection
+      System.out.println("Connecting to database...");
+      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+      //STEP 4: Execute a query
+      System.out.println("Creating statement...");
+      stmt = conn.createStatement();
+      String sql;
+      String sqlstr = 
+               "SELECT  P.SSN, P.Address, P.LastName, P.FirstName, L.City, L.State, C.Email, P.ZipCode, P.Telephone, C.CreditCardNumber, C.Rating "+
+               "FROM 7nVxZhInjB.Location L, 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C "+
+               "where L.ZipCode = P.ZipCode and C.CustomerId = P.SSN ";
+      ResultSet rs = stmt.executeQuery(sqlstr);
+
+      //STEP 5: Extract data from result set
+      while(rs.next()){
+         //Retrieve by column name
+         System.out.print(rs.getString("SSN"));
+         System.out.print(rs.getString("Address"));
+         System.out.print(rs.getString("LastName"));
+         System.out.print(rs.getString("FirstName"));
+         System.out.print(rs.getString("City"));
+         System.out.print(rs.getString("State"));
+         System.out.print(rs.getString("Email"));
+         System.out.print(rs.getInt("ZipCode"));
+         System.out.print(rs.getString("Telephone"));
+         System.out.print(rs.getString("CreditCardNumber"));
+         System.out.println(rs.getInt("Rating"));
+      }
+      //STEP 6: Clean-up environment
+      rs.close();
+      stmt.close();
+      conn.close();
+   }catch(SQLException se){
+      //Handle errors for JDBC
+      se.printStackTrace();
+   }catch(Exception e){
+      //Handle errors for Class.forName
+      e.printStackTrace();
+   }finally{
+      //finally block used to close resources
+      try{
+         if(stmt!=null)
+            stmt.close();
+      }catch(SQLException se2){
+      }// nothing we can do
+      try{
+         if(conn!=null)
+            conn.close();
+      }catch(SQLException se){
+         se.printStackTrace();
+      }//end finally try
+   }//end try
+   System.out.println("Goodbye!");
+}//end main
+}//end FirstExample

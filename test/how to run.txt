@@ -1,0 +1,6 @@
+In windows:
+javac Test.java
+java -cp .;mysql-connector-java-8.0.12.jar Test
+
+In OSX:
+havent try yet
