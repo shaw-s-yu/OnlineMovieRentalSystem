@@ -170,21 +170,55 @@ public class CustomerDao {
 		 * The customer record is required to be encapsulated as a "Customer" class object
 		 */
 		
-		/*Sample data begins*/
-		Customer customer = new Customer();
-		customer.setCustomerID("111-11-1111");
-		customer.setAddress("123 Success Street");
-		customer.setLastName("Lu");
-		customer.setFirstName("Shiyong");
-		customer.setCity("Stony Brook");
-		customer.setState("NY");
-		customer.setEmail("shiyong@cs.sunysb.edu");
-		customer.setZipCode(11790);
-		customer.setTelephone("5166328959");
-		customer.setCreditCard("1234567812345678");
-		customer.setRating(1);
-		/*Sample data ends*/
 		
+		Connection conn = null;
+		Customer customer = new Customer();
+		try {
+			String sqlstr = 
+					"SELECT  P.SSN, P.Address, P.LastName, P.FirstName, L.City, L.State, C.Email, P.ZipCode, P.Telephone, C.CreditCardNumber, C.Rating "+
+					"FROM 7nVxZhInjB.Location L, 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C "+
+					"where L.ZipCode = P.ZipCode and C.CustomerId = P.SSN and P.SSN = "+ customerID;
+
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			if (rs.next()) {
+				customer.setCustomerID(rs.getString("SSN"));
+				customer.setAddress(rs.getString("Address"));
+				customer.setLastName(rs.getString("LastName"));
+				customer.setFirstName(rs.getString("FirstName"));
+				customer.setCity(rs.getString("City"));
+				customer.setState(rs.getString("State"));
+				customer.setEmail(rs.getString("Email"));
+				customer.setZipCode(rs.getInt("ZipCode"));
+				customer.setTelephone(rs.getString("Telephone"));
+				customer.setCreditCard(rs.getString("CreditCardNumber"));
+				customer.setRating(rs.getInt("Rating"));
+			}
+
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+
 		return customer;
 	}
 	
