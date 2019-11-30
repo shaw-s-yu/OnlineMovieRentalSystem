@@ -229,10 +229,66 @@ public class CustomerDao {
 		 * The students code to delete the data from the database will be written here
 		 * customerID, which is the Customer's ID who's details have to be deleted, is given as method parameter
 		 */
+		
+		Connection conn = null;
+		try {
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Customer WHERE CustomerId = "
+					+ customerID;
 
-		/*Sample data begins*/
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			DBAccessHelper.getDAO().execute(sqlstr, conn);
+
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		try {
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Person WHERE SSN = "
+					+ customerID;
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			DBAccessHelper.getDAO().execute(sqlstr, conn);
+
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		try {
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Account WHERE CustomerId = "
+					+ customerID;
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			DBAccessHelper.getDAO().execute(sqlstr, conn);
+
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+
 		return "success";
-		/*Sample data ends*/
 		
 	}
 
