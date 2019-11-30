@@ -78,16 +78,47 @@ public class MovieDao {
 		 * The record is required to be encapsulated as a "Movie" class object
 		 */
 
+		Connection conn = null;
 		Movie movie = new Movie();
+
+		try {
+			String sqlstr = 
+					"SELECT  * FROM  7nVxZhInjB.Movie WHERE Id = " + movieID;
+
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			if (rs.next()) {
+				movie.setMovieID(rs.getInt("Id"));
+				movie.setMovieName(rs.getString("Name"));
+				movie.setMovieType(rs.getString("Type"));
+				movie.setDistFee(rs.getInt("DistrFee"));
+				movie.setNumCopies(rs.getInt("NumCopies"));
+				movie.setRating(rs.getInt("Rating"));
+			}
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
-		/*Sample data begins*/
-		movie.setMovieID(1);
-		movie.setMovieName("The Godfather");
-		movie.setMovieType("Drama");
-		movie.setDistFee(10000);
-		movie.setNumCopies(3);
-		movie.setRating(5);
-		/*Sample data ends*/
 		
 		return movie;
 	}
