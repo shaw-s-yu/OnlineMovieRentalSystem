@@ -189,7 +189,7 @@ public class CustomerDao {
 				customer.setCustomerID(rs.getString("SSN"));
 				customer.setAddress(rs.getString("Address"));
 				customer.setLastName(rs.getString("LastName"));
-				customer.setFirstName(rs.getString("FirstName"));
+				customer.setFirstName("fwef wef wef wefw e we f ew");
 				customer.setCity(rs.getString("City"));
 				customer.setState(rs.getString("State"));
 				customer.setEmail(rs.getString("Email"));
@@ -240,7 +240,17 @@ public class CustomerDao {
 			// executeQuery string
 			DBAccessHelper.getDAO().execute(sqlstr, conn);
 
-		} finally {
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		}finally {
 			// close connection
 			try {
 				if (conn != null)
@@ -259,6 +269,16 @@ public class CustomerDao {
 			// executeQuery string
 			DBAccessHelper.getDAO().execute(sqlstr, conn);
 
+		}catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
 		} finally {
 			// close connection
 			try {
@@ -304,7 +324,7 @@ public class CustomerDao {
 		String customerID = null;
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT CustomerId " + " FROM Customer "
+			String sqlstr = "SELECT CustomerId " + " FROM 7nVxZhInjB.Customer "
 					+ " WHERE Email = " + username;
 
 			ResultSet rs = null;
@@ -395,10 +415,41 @@ public class CustomerDao {
 		 * You need to handle the database update and return "success" or "failure" based on result of the database update.
 		 */
 		
+		
+		
+		
+		Connection conn = null;
+		try {
+			
+			Update update = new Update(customer);
+			String[] queries = update.updateByCustomer();
+			conn = DBAccessHelper.getDAO().getConnection();
+			for(int i=0; i<queries.length;i++) {
+				DBAccessHelper.getDAO().execute(queries[i], conn);
+			}					
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 		/*Sample data begins*/
 		return "success";
 		/*Sample data ends*/
 
 	}
-
 }

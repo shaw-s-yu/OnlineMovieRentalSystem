@@ -85,7 +85,6 @@
 			<input type="submit" value="Home" class="btn btn-success"/>
 		</form>
 	</div>
-	
 
 </body>
 </html>

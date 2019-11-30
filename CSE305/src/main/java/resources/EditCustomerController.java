@@ -40,7 +40,7 @@ public class EditCustomerController extends HttpServlet {
 		
 		CustomerDao customerDao = new CustomerDao();
 		Customer editCustomer = customerDao.getCustomer(customerID);
-		
+
 		request.getSession(true).setAttribute("editCustomer", editCustomer);
 		response.sendRedirect("editCustomer.jsp");
 

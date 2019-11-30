@@ -1,7 +1,7 @@
 //STEP 1. Import required packages
 import java.sql.*;
 
-public class FirstExample {
+public class Test {
    // JDBC driver name and database URL
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
    static final String DB_URL = "jdbc:mysql://remotemysql.com:3306/?user=7nVxZhInjB";
@@ -13,6 +13,9 @@ public class FirstExample {
    public static void main(String[] args) {
    Connection conn = null;
    Statement stmt = null;
+   Object a = new Test();
+   System.out.println(a.getClass().getName());
+
    try{
       //STEP 2: Register JDBC driver
       Class.forName("com.mysql.jdbc.Driver");
@@ -25,29 +28,12 @@ public class FirstExample {
       System.out.println("Creating statement...");
       stmt = conn.createStatement();
       String sql;
-      String sqlstr = 
-               "SELECT  P.SSN, P.Address, P.LastName, P.FirstName, L.City, L.State, C.Email, P.ZipCode, P.Telephone, C.CreditCardNumber, C.Rating "+
-               "FROM 7nVxZhInjB.Location L, 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C "+
-               "where L.ZipCode = P.ZipCode and C.CustomerId = P.SSN ";
-      ResultSet rs = stmt.executeQuery(sqlstr);
+      String sqlstr = "UPDATE `7nVxZhInjB`.`Person` SET LastName = 'Smith' WHERE SSN = 123456789";
+      stmt.execute(sqlstr);
 
       //STEP 5: Extract data from result set
-      while(rs.next()){
-         //Retrieve by column name
-         System.out.print(rs.getString("SSN"));
-         System.out.print(rs.getString("Address"));
-         System.out.print(rs.getString("LastName"));
-         System.out.print(rs.getString("FirstName"));
-         System.out.print(rs.getString("City"));
-         System.out.print(rs.getString("State"));
-         System.out.print(rs.getString("Email"));
-         System.out.print(rs.getInt("ZipCode"));
-         System.out.print(rs.getString("Telephone"));
-         System.out.print(rs.getString("CreditCardNumber"));
-         System.out.println(rs.getInt("Rating"));
-      }
+      
       //STEP 6: Clean-up environment
-      rs.close();
       stmt.close();
       conn.close();
    }catch(SQLException se){
