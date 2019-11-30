@@ -301,7 +301,42 @@ public class CustomerDao {
 		 * The Customer's ID is required to be returned as a String
 		 */
 
-		return "111-11-1111";
+		String customerID = null;
+		Connection conn = null;
+		try {
+			String sqlstr = "SELECT CustomerId " + " FROM Customer "
+					+ " WHERE Email = " + username;
+
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			if (rs.next()) {
+				customerID = rs.getString("CustomerId");
+			}
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return customerID;
 	}
 
 
