@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Customer;
-import model.Customer;
 
 import java.util.stream.IntStream;
 
@@ -82,22 +81,56 @@ public class CustomerDao {
 
 		
 		List<Customer> customers = new ArrayList<Customer>();
-		
-		/*Sample data begins*/
-		for (int i = 0; i < 10; i++) {
-			Customer customer = new Customer();
-			customer.setCustomerID("111-11-1111");
-			customer.setAddress("123 Success Street");
-			customer.setLastName("Lu");
-			customer.setFirstName("Shiyong");
-			customer.setCity("Stony Brook");
-			customer.setState("NY");
-			customer.setEmail("shiyong@cs.sunysb.edu");
-			customer.setZipCode(11790);
-			customers.add(customer);			
+
+		Connection conn = null;
+		try {
+			String sqlstr = 
+					"SELECT P.SSN, P.FirstName, P.LastName, P.Address, L.State, L.City, L.ZipCode, C.Email "+
+					"FROM 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C, 7nVxZhInjB.Location L "+
+					"WHERE P.SSN = C.CustomerId AND P.ZipCode = L.ZipCode ";
+
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			while (rs.next()) {
+				Customer customer = new Customer();
+				customer.setCustomerID(rs.getString("SSN"));
+				customer.setAddress(rs.getString("Address"));
+				customer.setLastName(rs.getString("LastName"));
+				customer.setFirstName(rs.getString("FirstName"));
+				customer.setCity(rs.getString("City"));
+				customer.setState(rs.getString("State"));
+				customer.setEmail(rs.getString("Email"));
+				customer.setZipCode(rs.getInt("ZipCode"));
+				customers.add(customer);
+			}
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-		/*Sample data ends*/
-		
+
+		/* Sample data begins */
+
+		/* Sample data ends */
+
 		return customers;
 	}
 
