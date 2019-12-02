@@ -104,7 +104,7 @@ public class EmployeeDao {
 		try {
 			
 			Update update = new Update(employee);
-			String[] queries = update.updateByCustomer();
+			String[] queries = update.updateByEmployee();
 			conn = DBAccessHelper.getDAO().getConnection();
 			for(int i=0; i<queries.length;i++) {
 				DBAccessHelper.getDAO().execute(queries[i], conn);
