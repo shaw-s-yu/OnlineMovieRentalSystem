@@ -490,10 +490,11 @@ public class CustomerDao {
 		
 		queries[3] = String.format("INSERT INTO  7nVxZhInjB.Login " +
 				"values(\'%s\',\'%s\', \'%s\', \'%s\');",
+				customer.getCustomerID(),
 			customer.getEmail(),
 			customer.getPassword(),
-			Integer.toString(0),
-			customer.getCustomerID());
+			Integer.toString(0));
+			
 		
 		try {
 			
