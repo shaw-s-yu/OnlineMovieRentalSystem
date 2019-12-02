@@ -1,5 +1,9 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import model.Login;
 
 public class LoginDao {
@@ -20,7 +24,56 @@ public class LoginDao {
 		
 		/*Sample data begins*/
 		Login login = new Login();
-		login.setRole("customerRepresentative");
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			String sqlstr = "SELECT * FROM 7nVxZhInjB.Login WHERE username = '"
+					+ username +"' AND password = '" + password +"'";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			try {
+				
+				// if failed to login
+				if(rs == null){
+					return null;
+				}
+				
+				if (rs.next()) {
+					int role = Integer.parseInt(rs.getString("role"));
+					switch(role){
+						case 0:
+							login.setRole("customer");
+							break;
+						case 1:
+							login.setRole("customerRepresentative");
+							break;
+						case 2:
+							login.setRole("manager");
+							break;	
+						default:
+							login.setRole("customer");
+					}
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+//		login.setRole("customerRepresentative");
+		
 //		login.setRole("manager");
 		return login;
 		/*Sample data ends*/
