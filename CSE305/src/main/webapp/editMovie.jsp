@@ -32,6 +32,10 @@
 	<c:if test="${not empty editMovie}"> 	
 	<form action="updateMovie" method="POST">
 	  <div class="form-group">
+	    <label for="movieName">Movie ID</label>
+	    <input type="text" class="form-control" id="movieID" name="movieID" placeholder="Enter Id" value=${editMovie.movieID} required>
+	  </div>
+	  <div class="form-group">
 	    <label for="movieName">Movie Name</label>
 	    <input type="text" class="form-control" id="movieName" name="movieName" placeholder="Enter name" value=${editMovie.movieName} required>
 	  </div>

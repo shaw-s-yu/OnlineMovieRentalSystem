@@ -90,8 +90,9 @@ public class MovieDao {
 			conn = DBAccessHelper.getDAO().getConnection();
 			// executeQuery string
 			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
-
+			
 			if (rs.next()) {
+				System.out.println(movieID+" "+ rs.getInt("Id"));
 				movie.setMovieID(rs.getInt("Id"));
 				movie.setMovieName(rs.getString("Name"));
 				movie.setMovieType(rs.getString("Type"));
@@ -184,6 +185,35 @@ public class MovieDao {
 		 * The sample code returns "success" by default.
 		 * You need to handle the database update and return "success" or "failure" based on result of the database update.
 		 */
+		Update update= new Update(movie);
+		String sqlstr = update.updateByMovie();
+		Connection conn = null;
+
+		try {
+			
+			conn = DBAccessHelper.getDAO().getConnection();
+			System.out.println(movie.getMovieID());
+				DBAccessHelper.getDAO().execute(sqlstr, conn);
+								
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
 		/*Sample data begins*/
 		return "success";

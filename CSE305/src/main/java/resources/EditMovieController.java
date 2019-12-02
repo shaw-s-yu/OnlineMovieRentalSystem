@@ -37,7 +37,7 @@ public class EditMovieController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String movieID = request.getParameter("movieID");
-		
+		System.out.println("fefwf"+movieID);
 		MovieDao movieDao = new MovieDao();
 		Movie editMovie = movieDao.getMovie(movieID);
 		
