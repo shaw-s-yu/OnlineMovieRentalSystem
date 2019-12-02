@@ -458,11 +458,15 @@ public List<Movie> getQueueOfMovies(String customerID){
 		List<Movie> movies = new ArrayList<Movie>();
 		
 		/*Sample data begins*/
-		for (int i = 0; i < 6; i++) {
-			Movie movie = new Movie();
-			movie.setMovieType("Drama");
-			movies.add(movie);
-		}
+		movies.add(new Movie());
+		movies.get(movies.size()-1).setMovieType("Comedy");
+		movies.add(new Movie());
+		movies.get(movies.size()-1).setMovieType("Drama");
+		movies.add(new Movie());
+		movies.get(movies.size()-1).setMovieType("Action");
+		movies.add(new Movie());
+		movies.get(movies.size()-1).setMovieType("Foreign");
+		
 		/*Sample data ends*/
 		
 		return movies;
