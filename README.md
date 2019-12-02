@@ -6,3 +6,8 @@
 ### Port: 3306
 ### Username: 7nVxZhInjB
 ### Password: J2q22YGyY6
+
+
+### update HTML/JSP
+1. updated editMovie.jsp: need an extra input textfield for movieID, and added set MovieId in updateMovieController.java, otherwise moviedao.java cannot get movieid for sql query.
+2. updated managerHome.jsp: typos displayed in manage movie section, should be movie but appears as employee 
