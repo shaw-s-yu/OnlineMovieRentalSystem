@@ -90,7 +90,7 @@ public class CustomerDao {
 		 * The customer record is required to be encapsulated as a "Customer" class object
 		 */
 
-		Customer customer = new Customer();
+		Customer customer = null;
 		
 		Connection conn = null;
 		ResultSet rs = null;
@@ -111,10 +111,8 @@ public class CustomerDao {
 				
 				if (rs.next()) {
 					String customerId = rs.getString("CustomerId");
-					return this.getCustomer(customerId);
+					customer = this.getCustomer(customerId);
 
-				}else{
-					return null;
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

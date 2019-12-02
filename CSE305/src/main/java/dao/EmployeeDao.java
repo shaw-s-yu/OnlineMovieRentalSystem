@@ -398,7 +398,7 @@ public class EmployeeDao {
 		 * The record is required to be encapsulated as a "Employee" class object
 		 */
 		
-		Employee employee = new Employee();
+		Employee employee =  null;
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
@@ -427,17 +427,13 @@ public class EmployeeDao {
 						rs2 = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
 						if(rs2.next()){
 							String SSN = rs2.getString("SSN");
-							return this.getEmployee(SSN);
-						}else{
-							return null;
+							employee = this.getEmployee(SSN);
 						}
 					}catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
-				}else{
-					return null;
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
