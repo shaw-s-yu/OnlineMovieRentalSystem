@@ -227,7 +227,35 @@ public class MovieDao {
 		 * The sample code returns "success" by default.
 		 * You need to handle the database deletion and return "success" or "failure" based on result of the database deletion.
 		 */
-		
+		Connection conn = null;
+		try {
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Movie WHERE Id = '"
+					+ movieID + "'";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			DBAccessHelper.getDAO().execute(sqlstr, conn);
+
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		}finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		/*Sample data begins*/
 		return "success";
 		/*Sample data ends*/
