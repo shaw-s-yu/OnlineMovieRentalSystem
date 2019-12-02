@@ -38,7 +38,7 @@ public class LoginDao {
 			try {
 				
 				// if failed to login
-				if(rs == null ||!rs.next()){
+				if(rs == null){
 					return null;
 				}
 				
@@ -58,6 +58,10 @@ public class LoginDao {
 							login=null;
 					}
 					
+				}
+				else{
+					System.out.println("Failed to login");
+					return null;
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
