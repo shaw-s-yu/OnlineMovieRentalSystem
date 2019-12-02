@@ -38,7 +38,7 @@ public class LoginDao {
 			try {
 				
 				// if failed to login
-				if(rs == null){
+				if(rs == null ||!rs.next()) {
 					return null;
 				}
 				
@@ -55,7 +55,7 @@ public class LoginDao {
 							login.setRole("manager");
 							break;	
 						default:
-							login.setRole("customer");
+							login=null;
 					}
 					
 				}
