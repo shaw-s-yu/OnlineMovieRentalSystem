@@ -407,6 +407,61 @@ public class EmployeeDao {
 		employee.setEmployeeID("631-413-5555");
 		/*Sample data ends*/
 		
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			String sqlstr = "SELECT CustRepId, COUNT(OrderId) FROM 7nVxZhInjB.Rental GROUP BY CustRepId HAVING COUNT(OrderId) = (SELECT MAX(count) FROM (SELECT CustRepId, COUNT(OrderId) As count FROM 7nVxZhInjB.Rental GROUP BY CustRepId)subquery)";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			try {
+				// if failed to login
+				if(rs == null){
+					System.out.println("Query is incorrect.");
+					return null;
+				}
+				
+				if (rs.next()) {
+					try {
+						sqlstr = "SELECT SSN FROM 7nVxZhInjB.Employee WHERE Id = '" + rs.getString("CustRepId") +"'";
+						// Connect to data base
+						conn = DBAccessHelper.getDAO().getConnection();
+						ResultSet rs2 = null;
+						// executeQuery string
+						rs2 = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+						if(rs2.next()){
+							String SSN = rs2.getString("SSN");
+							return this.getEmployee(SSN);
+						}else{
+							return null;
+						}
+					}catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}else{
+					return null;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+
+		
 		return employee;
 	}
 
