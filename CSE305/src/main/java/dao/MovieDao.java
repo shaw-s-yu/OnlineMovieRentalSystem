@@ -132,7 +132,44 @@ public class MovieDao {
 		 * The sample code returns "success" by default.
 		 * You need to handle the database insertion of the movie details and return "success" or "failure" based on result of the database insertion.
 		 */
+		Connection conn = null;
 		
+		String[] queries = new String[1];
+		
+		queries[0] = String.format("INSERT INTO  7nVxZhInjB.Movie " +
+				"values(null, \'%s\',\'%s\', \'%s\', \'%s\', \'%s\');",
+				movie.getMovieName(),
+				movie.getMovieType(),
+				Integer.toString(movie.getRating()),
+				Integer.toString(movie.getDistFee()),
+				Integer.toString(movie.getNumCopies()));
+		
+		try {
+			
+			conn = DBAccessHelper.getDAO().getConnection();
+			for(int i=0; i<queries.length;i++) {
+				System.out.println(queries[i]);
+				DBAccessHelper.getDAO().execute(queries[i], conn);
+			}					
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		/*Sample data begins*/
 		return "success";
 		/*Sample data ends*/
