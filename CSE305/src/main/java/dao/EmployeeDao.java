@@ -126,21 +126,100 @@ public class EmployeeDao {
 		 */
 
 		Employee employee = new Employee();
+		Connection conn = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		int ZipCode = 123;
+		try {
+			String sqlstr = "SELECT * FROM 7nVxZhInjB.Person WHERE SSN = '"
+					+ employeeID +"'";
+			
+			String sqlstr2 = "SELECT * FROM 7nVxZhInjB.Employee WHERE SSN = '"
+					+ employeeID +"'";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			rs2 = DBAccessHelper.getDAO().executeQuery(sqlstr2, conn);
+			try {
+				// if failed to login
+				if(rs == null || rs2 == null){
+					System.out.println("Failed to query.");
+					return null;
+				}
+				
+				if (rs.next() && rs2.next()) {
+					employee.setEmail(rs.getString("Email"));
+					employee.setFirstName(rs.getString("FirstName"));
+					employee.setLastName(rs.getString("LastName"));
+					employee.setAddress(rs.getString("Address"));
+					employee.setTelephone(rs.getString("Telephone"));
+					employee.setEmployeeID(rs.getString("SSN"));
+					
+					ZipCode = Integer.parseInt(rs.getString("ZipCode"));
+					employee.setZipCode(ZipCode);
+					
+					employee.setStartDate(rs2.getString("StartDate"));
+					employee.setHourlyRate(Integer.parseInt(rs2.getString("HourlyRate")));
+					
+				}else{
+					System.out.println("Failed to get a result from this employee id.");
+					return null;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
-		/*Sample data begins*/
-		employee.setEmail("shiyong@cs.sunysb.edu");
-		employee.setFirstName("Shiyong");
-		employee.setLastName("Lu");
-		employee.setAddress("123 Success Street");
-		employee.setCity("Stony Brook");
-		employee.setStartDate("2006-10-17");
-		employee.setState("NY");
-		employee.setZipCode(11790);
-		employee.setTelephone("5166328959");
-		employee.setEmployeeID("631-413-5555");
-		employee.setHourlyRate(100);
-		/*Sample data ends*/
-		
+		try {
+			String sqlstr = "SELECT * FROM 7nVxZhInjB.Location WHERE ZipCode = '"
+					+ ZipCode +"'";
+			
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			try {
+				// if failed to login
+				if(rs == null){
+					System.out.println("Failed to query.");
+					return null;
+				}
+				
+				if (rs.next()) {
+					employee.setCity(rs.getString("City"));
+					employee.setState(rs.getString("State"));
+				}else{
+					System.out.println("Failed to get a result from this zipcode.");
+					return null;
+				}
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		return employee;
 	}
 	
