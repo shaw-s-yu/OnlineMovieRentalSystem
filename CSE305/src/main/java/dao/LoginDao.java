@@ -23,7 +23,7 @@ public class LoginDao {
 		 */
 		
 		/*Sample data begins*/
-		Login login = new Login();
+		Login login = null;
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
@@ -38,26 +38,29 @@ public class LoginDao {
 			try {
 				
 				// if failed to login
-				if(rs == null ||!rs.next()){
-					return null;
-				}
 				
 				if (rs.next()) {
 					int role = Integer.parseInt(rs.getString("role"));
+					System.out.println("werwerw rwer"+role);
 					switch(role){
 						case 0:
+							login= new Login();
 							login.setRole("customer");
 							break;
 						case 1:
+							login= new Login();
 							login.setRole("customerRepresentative");
 							break;
 						case 2:
+							login= new Login();
 							login.setRole("manager");
 							break;	
 						default:
 							login=null;
 					}
 					
+				}else {
+					return null;
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
