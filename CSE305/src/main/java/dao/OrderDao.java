@@ -11,6 +11,8 @@ import model.Rental;
 import model.Account;
 import model.Customer;
 import model.Movie;
+import java.util.Date;  
+import java.time.LocalDate;
 
 public class OrderDao {
 	
@@ -185,6 +187,42 @@ public class OrderDao {
 		 * orderID is the Order's ID, given as method parameter
 		 * The method should return a "success" string if the update is successful, else return "failure"
 		 */
+		
+		
+		Date date = new Date();
+		String returnDate = (date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDate();
+		String sqlstr = "UPDATE 7nVxZhInjB.MovieOrder SET returnDate = '"+returnDate+"' WHERE id = '"+orderID+"'";
+		
+		
+		Connection conn = null;
+		try {
+			System.out.println(sqlstr);
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			DBAccessHelper.getDAO().execute(sqlstr, conn);
+
+
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 		/* Sample data begins */
 		return "success";
 		/* Sample data ends */
