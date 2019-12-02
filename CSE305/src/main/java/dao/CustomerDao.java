@@ -106,6 +106,8 @@ public class CustomerDao {
 				// if failed to login
 				if(rs == null){
 					System.out.println("Query is incorrect.");
+					if (conn != null)
+						conn.close();
 					return null;
 				}
 				
@@ -214,6 +216,11 @@ public class CustomerDao {
 			conn = DBAccessHelper.getDAO().getConnection();
 			// executeQuery string
 			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			if(rs == null){
+				if (conn != null)
+					conn.close();
+				return null;
+			}
 
 			if (rs.next()) {
 				customer.setCustomerID(rs.getString("SSN"));
@@ -394,6 +401,8 @@ public class CustomerDao {
 			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
 			if(rs == null){
 				System.out.println("Failed. rs is null. Query is wrong");
+				if (conn != null)
+					conn.close();
 				return null;
 			}
 			if (rs.next()) {
