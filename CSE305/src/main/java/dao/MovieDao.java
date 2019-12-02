@@ -525,8 +525,8 @@ public List<Movie> getQueueOfMovies(String customerID){
 				
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Movie WHERE NAME LIKE '%"+movieName+"'";
-
+			String sqlstr = "SELECT * FROM 7nVxZhInjB.Movie WHERE NAME LIKE '%"+movieName+"%'";
+			System.out.println(sqlstr);
 			ResultSet rs = null;
 			// Connect to data base
 			conn = DBAccessHelper.getDAO().getConnection();
@@ -582,16 +582,49 @@ public List<Movie> getQueueOfMovies(String customerID){
 		List<Movie> movies = new ArrayList<Movie>();
 		
 		/*Sample data begins*/
-		for (int i = 0; i < 4; i++) {
-			Movie movie = new Movie();
-			movie.setMovieID(1);
-			movie.setMovieName("The Godfather");
-			movie.setMovieType("Drama");
-			movies.add(movie);
-			
-		}
-		/*Sample data ends*/
+		System.out.println("fsdf");
 		
+		Connection conn = null;
+		try {
+			String sqlstr = "SELECT * FROM 7nVxZhInjB.Movie WHERE Id IN ("+
+					"SELECT I.MovieId FROM 7nVxZhInjB.AppearedIn I, 7nVxZhInjB.Actor A WHERE A.Id = I.ActorId AND "+
+					"A.Name LIKE '%"+actorName+"%')";
+			System.out.println(sqlstr);
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			if(rs == null){
+				System.out.println("Failed. rs is null. Query is wrong");
+				return null;
+			}
+			while (rs.next()) {
+				Movie movie = new Movie();
+				movie.setMovieID(rs.getInt("Id"));
+				movie.setMovieName(rs.getString("Name"));
+				movie.setMovieType(rs.getString("Type"));
+				movies.add(movie);
+			}
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 
 		
 		return movies;
