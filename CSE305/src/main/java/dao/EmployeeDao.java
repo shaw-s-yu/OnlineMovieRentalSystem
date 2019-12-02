@@ -95,24 +95,42 @@ public class EmployeeDao {
 		 */
 
 		List<Employee> employees = new ArrayList<Employee>();
-		
-		/*Sample data begins*/
-		for (int i = 0; i < 10; i++) {
-			Employee employee = new Employee();
-			employee.setEmail("shiyong@cs.sunysb.edu");
-			employee.setFirstName("Shiyong");
-			employee.setLastName("Lu");
-			employee.setAddress("123 Success Street");
-			employee.setCity("Stony Brook");
-			employee.setStartDate("2006-10-17");
-			employee.setState("NY");
-			employee.setZipCode(11790);
-			employee.setTelephone("5166328959");
-			employee.setEmployeeID("631-413-5555");
-			employee.setHourlyRate(100);
-			employees.add(employee);
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			String sqlstr = "SELECT * FROM 7nVxZhInjB.Employee";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			try {
+				// if failed to login
+				if(rs == null){
+					System.out.println("Query is incorrect.");
+					return null;
+				}
+				
+				while (rs.next()) {
+					Employee employee = this.getEmployee(rs.getString("SSN"));
+					employees.add(employee);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-		/*Sample data ends*/
+
 		
 		return employees;
 	}
