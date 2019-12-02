@@ -54,10 +54,11 @@ public class EmployeeDao {
 		
 		queries[3] = String.format("INSERT INTO  7nVxZhInjB.Login " +
 				"values(\'%s\',\'%s\', \'%s\', \'%s\');",
+				employee.getEmployeeID(),
 				employee.getEmail(),
 				employee.getPassword(),
-			Integer.toString(1), // representatives
-			employee.getEmployeeID());
+				Integer.toString(1) // representatives
+			);
 		
 		try {
 			
@@ -260,6 +261,8 @@ public class EmployeeDao {
 				// if failed to login
 				if(rs == null){
 					System.out.println("Query is incorrect.");
+					if (conn != null)
+						conn.close();
 					return null;
 				}
 				
@@ -315,6 +318,8 @@ public class EmployeeDao {
 				// if failed to login
 				if(rs == null || rs2 == null){
 					System.out.println("Failed to query.");
+					if (conn != null)
+						conn.close();
 					return null;
 				}
 				
@@ -364,6 +369,8 @@ public class EmployeeDao {
 				// if failed to login
 				if(rs == null){
 					System.out.println("Failed to query.");
+					if (conn != null)
+						conn.close();
 					return null;
 				}
 				
@@ -414,6 +421,8 @@ public class EmployeeDao {
 				// if failed to login
 				if(rs == null){
 					System.out.println("Query is incorrect.");
+					if (conn != null)
+						conn.close();
 					return null;
 				}
 				
@@ -461,6 +470,7 @@ public class EmployeeDao {
 		 */
 		Connection conn = null;
 		ResultSet rs = null;
+		String employeeID = "";
 		try {
 			String sqlstr = "SELECT SSN FROM 7nVxZhInjB.Person WHERE Email = '"
 					+ username + "'";
@@ -475,16 +485,16 @@ public class EmployeeDao {
 				// if failed to login
 				if(rs == null){
 					System.out.println("Failed. rs is null");
+					if (conn != null)
+						conn.close();
 					return null;
 				}
 				
 				if (rs.next()) {
-					String SSN = rs.getString("SSN");
-					return SSN;
+					employeeID = rs.getString("SSN");
 					
 				}else{
 					System.out.println("Failed. rs is empty");
-					return null;
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -499,7 +509,7 @@ public class EmployeeDao {
 				e1.printStackTrace();
 			}
 		}
-		return "111111111";
+		return employeeID;
 	}
 
 
