@@ -274,15 +274,51 @@ public class MovieDao {
 		List<Movie> movies = new ArrayList<Movie>();
 		
 		
-		/*Sample data begins*/
-		for (int i = 0; i < 5; i++) {
-			Movie movie = new Movie();
-			movie.setMovieID(1);
-			movie.setMovieName("The Godfather");
-			movie.setMovieType("Drama");
-			movies.add(movie);
+		Connection conn = null;
+		try {
+			String sqlstr = "SELECT 7nVxZhInjB.Movie.*, DistrFee*COUNT(MovieId) FROM 7nVxZhInjB.Movie, 7nVxZhInjB.MovieOrder "+
+					"WHERE MovieId = 7nVxZhInjB.Movie.Id "+
+					"GROUP BY MovieId "+
+					"ORDER BY DistrFee*COUNT(MovieId) DESC";
+
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			if(rs == null){
+				System.out.println("Failed. rs is null. Query is wrong");
+				return null;
+			}
+			while (rs.next()) {
+				Movie movie = new Movie();
+				movie.setMovieID(rs.getInt("Id"));
+				movie.setMovieName(rs.getString("Name"));
+				movie.setMovieType(rs.getString("Type"));
+				movie.setDistFee(rs.getInt("DistrFee"));
+				movie.setNumCopies(rs.getInt("NumCopies"));
+				movie.setRating(rs.getInt("Rating"));
+				movies.add(movie);
+			}
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-		/*Sample data ends*/
 		
 		return movies;
 
@@ -768,7 +804,7 @@ public List<Movie> getQueueOfMovies(String customerID){
 		for (int i = 0; i < 6; i++) {
 			Movie movie = new Movie();
 			movie.setMovieID(1);
-			movie.setMovieName("The Godfather");
+			movie.setMovieName("The Godfatfwefher");
 			movie.setMovieType("Drama");
 			movie.setDistFee(10000);
 			movie.setNumCopies(3);

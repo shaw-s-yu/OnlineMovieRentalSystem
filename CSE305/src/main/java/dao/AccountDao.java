@@ -1,5 +1,8 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +23,48 @@ public class AccountDao {
 			 */
 	
 			int income = 0;
+			
+			String[] date = account.getAcctCreateDate().split("-");
 					
-			/*Sample data begins*/
-			income = 100;
-			/*Sample data ends*/
+			Connection conn = null;
+			try {
+				String sqlstr = "SELECT * FROM 7nVxZhInjB.Account WHERE DateOpened >= '"+ date[1]+"-"+date[0] + "'";
+				System.out.println(sqlstr);
+				ResultSet rs = null;
+				// Connect to data base
+				conn = DBAccessHelper.getDAO().getConnection();
+				// executeQuery string
+				rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+				if(rs == null){
+					System.out.println("Failed. rs is null. Query is wrong");
+					return 0;
+				}
+				
+				else {
+					while(rs.next()) {
+						income += rs.getInt("BookingFee");
+					}
+				}
+				
+
+			} catch (Exception e) {
+				// close connection
+				try {
+					if (conn != null)
+						conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			} finally {
+				// close connection
+				try {
+					if (conn != null)
+						conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 			
 	
 			return income;
