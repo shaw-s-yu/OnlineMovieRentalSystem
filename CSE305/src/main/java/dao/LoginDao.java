@@ -38,7 +38,7 @@ public class LoginDao {
 			try {
 				
 				// if failed to login
-				if(rs == null){
+				if(rs == null || !rs.next()){
 					return null;
 				}
 				
