@@ -430,7 +430,7 @@ public class CustomerDao {
 			customer.getCreditCard());
 		
 		queries[3] = String.format("INSERT INTO  7nVxZhInjB.Login " +
-				"values(null, \'%s\',\'%s\', \'%s\', \'%s\');",
+				"values(\'%s\',\'%s\', \'%s\', \'%s\');",
 			customer.getEmail(),
 			customer.getPassword(),
 			Integer.toString(0),
