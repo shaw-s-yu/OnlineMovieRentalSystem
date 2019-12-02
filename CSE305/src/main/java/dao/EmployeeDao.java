@@ -168,8 +168,49 @@ public class EmployeeDao {
 		 * username, which is the Employee's email address who's Employee ID has to be fetched, is given as method parameter
 		 * The Employee ID is required to be returned as a String
 		 */
+		Login login = new Login();
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			String sqlstr = "SELECT SSN FROM 7nVxZhInjB.Person WHERE Email = '"
+					+ username + "'";
 
-		return "111-11-1111";
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			
+			try {
+				// if failed to login
+				if(rs == null){
+					System.out.println("Failed. rs is null");
+					return null;
+				}
+				
+				if (rs.next()) {
+					String SSN = rs.getString("SSN");
+					return SSN;
+					
+				}else{
+					System.out.println("Failed. rs is empty");
+					return null;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return "111111111";
 	}
+
 
 }
