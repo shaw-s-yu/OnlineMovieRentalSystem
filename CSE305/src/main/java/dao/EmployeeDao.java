@@ -1,5 +1,7 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,34 @@ public class EmployeeDao {
 		 * The sample code returns "success" by default.
 		 * You need to handle the database update and return "success" or "failure" based on result of the database update.
 		 */
-		
+		Connection conn = null;
+		try {
+			
+			Update update = new Update(employee);
+			String[] queries = update.updateByCustomer();
+			conn = DBAccessHelper.getDAO().getConnection();
+			for(int i=0; i<queries.length;i++) {
+				DBAccessHelper.getDAO().execute(queries[i], conn);
+			}					
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		/*Sample data begins*/
 		return "success";
 		/*Sample data ends*/

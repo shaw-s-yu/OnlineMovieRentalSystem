@@ -33,7 +33,7 @@ public class CustomerDao {
 		Connection conn = null;
 		try {
 			String sqlstr = 
-					"SELECT  P.SSN, P.Address, P.LastName, P.FirstName, L.City, L.State, C.Email, P.ZipCode, P.Telephone, C.CreditCardNumber, C.Rating "+
+					"SELECT  P.SSN, P.Address, P.LastName, P.FirstName, L.City, L.State, P.Email, P.ZipCode, P.Telephone, C.CreditCardNumber, C.Rating "+
 					"FROM 7nVxZhInjB.Location L, 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C "+
 					"where L.ZipCode = P.ZipCode and C.CustomerId = P.SSN ";
 
@@ -116,7 +116,7 @@ public class CustomerDao {
 		Connection conn = null;
 		try {
 			String sqlstr = 
-					"SELECT P.SSN, P.FirstName, P.LastName, P.Address, L.State, L.City, L.ZipCode, C.Email "+
+					"SELECT P.SSN, P.FirstName, P.LastName, P.Address, L.State, L.City, L.ZipCode, P.Email "+
 					"FROM 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C, 7nVxZhInjB.Location L "+
 					"WHERE P.SSN = C.CustomerId AND P.ZipCode = L.ZipCode ";
 
@@ -175,7 +175,7 @@ public class CustomerDao {
 		Customer customer = new Customer();
 		try {
 			String sqlstr = 
-					"SELECT  P.SSN, P.Address, P.LastName, P.FirstName, L.City, L.State, C.Email, P.ZipCode, P.Telephone, C.CreditCardNumber, C.Rating "+
+					"SELECT  P.SSN, P.Address, P.LastName, P.FirstName, L.City, L.State, P.Email, P.ZipCode, P.Telephone, C.CreditCardNumber, C.Rating "+
 					"FROM 7nVxZhInjB.Location L, 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C "+
 					"where L.ZipCode = P.ZipCode and C.CustomerId = P.SSN and P.SSN = "+ customerID;
 
@@ -324,7 +324,7 @@ public class CustomerDao {
 		String customerID = null;
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT CustomerId " + " FROM 7nVxZhInjB.Customer "
+			String sqlstr = "SELECT CustomerId " + " FROM 7nVxZhInjB.Person "
 					+ " WHERE Email = " + username;
 
 			ResultSet rs = null;
