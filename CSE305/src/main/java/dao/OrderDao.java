@@ -1,5 +1,8 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +24,43 @@ public class OrderDao {
 		 * Query to get data about all the orders should be implemented
 		 */
 		
-		/*Sample data begins*/
-		for (int i = 0; i < 10; i++) {
-			Order order = new Order();
-			order.setOrderID(1);
-			order.setDateTime("11-11-09 10:00");
-			order.setReturnDate("11-14-09");
-			orders.add(order);
+		Connection conn = null;
+		try {
+			String sqlstr = 
+					"SELECT  * FROM  7nVxZhInjB.MovieOrder";
+
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			while (rs.next()) {
+				Order order = new Order();
+				order.setOrderID(rs.getInt("Id"));
+				order.setDateTime(rs.getString("DateTime"));
+				order.setReturnDate(rs.getString("ReturnDate"));
+				orders.add(order);
+			}
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-		/*Sample data ends*/
 		
 		return orders;
 
@@ -46,14 +77,44 @@ public class OrderDao {
 		 * customerID is the customer's primary key, given as method parameter
 		 */
 		
-		/*Sample data begins*/
-		for (int i = 0; i < 10; i++) {
-			Order order = new Order();
-			order.setOrderID(1);
-			order.setDateTime("11-11-09 10:00");
-			order.setReturnDate("11-14-09");
-			orders.add(order);
+		Connection conn = null;
+		try {
+			String sqlstr = 
+					"SELECT  * FROM  7nVxZhInjB.MovieOrder";
+
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			while (rs.next()) {
+				Order order = new Order();
+				order.setOrderID(rs.getInt("Id"));
+				order.setDateTime(rs.getString("DateTime"));
+				order.setReturnDate(rs.getString("ReturnDate"));
+				orders.add(order);
+			}
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
+		
 		/*Sample data ends*/
 		
 		return orders;
@@ -70,15 +131,46 @@ public class OrderDao {
 		 * employeeEmail is the email ID of the customer representative, which is given as method parameter
 		 */
 		
-		/*Sample data begins*/
-		for (int i = 0; i < 10; i++) {
-			Order order = new Order();
-			order.setOrderID(1);
-			order.setDateTime("11-11-09 10:00");
-			order.setReturnDate("11-14-09");
-			orders.add(order);
+		Connection conn = null;
+		try {
+			String sqlstr = 
+					"SELECT  * FROM  7nVxZhInjB.MovieOrder WHERE MovieId IN ("+
+					"SELECT R.MovieId FROM 7nVxZhInjB.Rental R, 7nVxZhInjB.Employee E, 7nVxZhInjB.Person P "+ 
+					"WHERE R.CustRepId = E.Id AND E.SSN = P.SSN AND P.Email = '"+employeeEmail+"')";
+			System.out.println(sqlstr);
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			while (rs.next()) {
+				Order order = new Order();
+				order.setOrderID(rs.getInt("Id"));
+				order.setDateTime(rs.getString("DateTime"));
+				order.setReturnDate(rs.getString("ReturnDate"));
+				orders.add(order);
+			}
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-		/*Sample data ends*/
+		
 		
 		return orders;
 
