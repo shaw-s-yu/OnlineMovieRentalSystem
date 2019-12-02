@@ -62,10 +62,6 @@ public class LoginDao {
 				}else {
 					return null;
 				}
-				else{
-					System.out.println("Failed to login");
-					return null;
-				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
