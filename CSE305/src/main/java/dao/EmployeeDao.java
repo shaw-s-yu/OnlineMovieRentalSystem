@@ -24,6 +24,68 @@ public class EmployeeDao {
 		 * You need to handle the database insertion of the employee details and return "success" or "failure" based on result of the database insertion.
 		 */
 		
+		Connection conn = null;
+		
+		String[] queries = new String[4];
+		
+		queries[0] = String.format("INSERT INTO  7nVxZhInjB.Location " +
+				"values(\'%s\',\'%s\', \'%s\');",
+			Integer.toString(employee.getZipCode()),
+			employee.getCity(),
+			employee.getState());
+		
+		queries[1] = String.format("INSERT INTO  7nVxZhInjB.Person " +
+				"values(\'%s\',\'%s\', \'%s\', \'%s\', %s, \'%s\' ,\'%s\')",
+				employee.getEmployeeID(),
+				employee.getLastName(),
+				employee.getFirstName(),
+				employee.getAddress(),
+				employee.getZipCode(),
+				employee.getTelephone(),
+				employee.getEmail());
+		
+		queries[2] = String.format("INSERT INTO  7nVxZhInjB.Employee " +
+				"values(\'%s\', \'%s\',\'%s\', \'%s\',\'%s\');",
+				employee.getEmployeeID(),
+				employee.getEmployeeID(),
+			employee.getStartDate(),
+			employee.getHourlyRate(),
+			employee.getLevel());
+		
+		queries[3] = String.format("INSERT INTO  7nVxZhInjB.Login " +
+				"values(\'%s\',\'%s\', \'%s\', \'%s\');",
+				employee.getEmail(),
+				employee.getPassword(),
+			Integer.toString(1), // representatives
+			employee.getEmployeeID());
+		
+		try {
+			
+			conn = DBAccessHelper.getDAO().getConnection();
+			for(int i=0; i<queries.length;i++) {
+				System.out.println(queries[i]);
+				DBAccessHelper.getDAO().execute(queries[i], conn);
+			}					
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 		/*Sample data begins*/
 		return "success";
 		/*Sample data ends*/
@@ -42,7 +104,7 @@ public class EmployeeDao {
 		try {
 			
 			Update update = new Update(employee);
-			String[] queries = update.updateByCustomer();
+			String[] queries = update.updateByEmployee();
 			conn = DBAccessHelper.getDAO().getConnection();
 			for(int i=0; i<queries.length;i++) {
 				DBAccessHelper.getDAO().execute(queries[i], conn);
@@ -78,7 +140,95 @@ public class EmployeeDao {
 		 * The sample code returns "success" by default.
 		 * You need to handle the database deletion and return "success" or "failure" based on result of the database deletion.
 		 */
+		Connection conn = null;
+		try {
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Employee WHERE SSN = '"
+					+ employeeID +"'";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			DBAccessHelper.getDAO().execute(sqlstr, conn);
+
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		}finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
+		try {
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Person WHERE SSN = '"
+					+ employeeID +"'";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			DBAccessHelper.getDAO().execute(sqlstr, conn);
+
+		}catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		try {
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Login WHERE SSN = '"
+					+ employeeID +"'";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			DBAccessHelper.getDAO().execute(sqlstr, conn);
+
+		}catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+
 		/*Sample data begins*/
 		return "success";
 		/*Sample data ends*/
@@ -95,24 +245,42 @@ public class EmployeeDao {
 		 */
 
 		List<Employee> employees = new ArrayList<Employee>();
-		
-		/*Sample data begins*/
-		for (int i = 0; i < 10; i++) {
-			Employee employee = new Employee();
-			employee.setEmail("shiyong@cs.sunysb.edu");
-			employee.setFirstName("Shiyong");
-			employee.setLastName("Lu");
-			employee.setAddress("123 Success Street");
-			employee.setCity("Stony Brook");
-			employee.setStartDate("2006-10-17");
-			employee.setState("NY");
-			employee.setZipCode(11790);
-			employee.setTelephone("5166328959");
-			employee.setEmployeeID("631-413-5555");
-			employee.setHourlyRate(100);
-			employees.add(employee);
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			String sqlstr = "SELECT * FROM 7nVxZhInjB.Employee";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+
+			try {
+				// if failed to login
+				if(rs == null){
+					System.out.println("Query is incorrect.");
+					return null;
+				}
+				
+				while (rs.next()) {
+					Employee employee = this.getEmployee(rs.getString("SSN"));
+					employees.add(employee);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-		/*Sample data ends*/
+
 		
 		return employees;
 	}
@@ -126,21 +294,100 @@ public class EmployeeDao {
 		 */
 
 		Employee employee = new Employee();
+		Connection conn = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		int ZipCode = 123;
+		try {
+			String sqlstr = "SELECT * FROM 7nVxZhInjB.Person WHERE SSN = '"
+					+ employeeID +"'";
+			
+			String sqlstr2 = "SELECT * FROM 7nVxZhInjB.Employee WHERE SSN = '"
+					+ employeeID +"'";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			rs2 = DBAccessHelper.getDAO().executeQuery(sqlstr2, conn);
+			try {
+				// if failed to login
+				if(rs == null || rs2 == null){
+					System.out.println("Failed to query.");
+					return null;
+				}
+				
+				if (rs.next() && rs2.next()) {
+					employee.setEmail(rs.getString("Email"));
+					employee.setFirstName(rs.getString("FirstName"));
+					employee.setLastName(rs.getString("LastName"));
+					employee.setAddress(rs.getString("Address"));
+					employee.setTelephone(rs.getString("Telephone"));
+					employee.setEmployeeID(rs.getString("SSN"));
+					
+					ZipCode = Integer.parseInt(rs.getString("ZipCode"));
+					employee.setZipCode(ZipCode);
+					
+					employee.setStartDate(rs2.getString("StartDate"));
+					employee.setHourlyRate(Integer.parseInt(rs2.getString("HourlyRate")));
+					
+				}else{
+					System.out.println("Failed to get a result from this employee id.");
+					return null;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
-		/*Sample data begins*/
-		employee.setEmail("shiyong@cs.sunysb.edu");
-		employee.setFirstName("Shiyong");
-		employee.setLastName("Lu");
-		employee.setAddress("123 Success Street");
-		employee.setCity("Stony Brook");
-		employee.setStartDate("2006-10-17");
-		employee.setState("NY");
-		employee.setZipCode(11790);
-		employee.setTelephone("5166328959");
-		employee.setEmployeeID("631-413-5555");
-		employee.setHourlyRate(100);
-		/*Sample data ends*/
-		
+		try {
+			String sqlstr = "SELECT * FROM 7nVxZhInjB.Location WHERE ZipCode = '"
+					+ ZipCode +"'";
+			
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			try {
+				// if failed to login
+				if(rs == null){
+					System.out.println("Failed to query.");
+					return null;
+				}
+				
+				if (rs.next()) {
+					employee.setCity(rs.getString("City"));
+					employee.setState(rs.getString("State"));
+				}else{
+					System.out.println("Failed to get a result from this zipcode.");
+					return null;
+				}
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		return employee;
 	}
 	

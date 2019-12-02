@@ -36,11 +36,12 @@ public class Update {
 	}
 	
 	public String[] updateByEmployee(){
-		String[] queries = new String[]{"", "", ""};
+		String[] queries = new String[]{"", "", "", ""};
 		
 		queries[0]= this.updatePerson("Employee");
 		queries[1]= this.updateLogin("Employee");
 		queries[2]= this.updateEmployee("Employee");
+		queries[3]= this.updateLocation("Employee");
 		
 		return queries;
 	}
@@ -60,12 +61,12 @@ public class Update {
 			sql = "UPDATE 7nVxZhInjB.Person SET" + " Email = '"+ this.customer.getEmail() +
 					"' , LastName = '"+ this.customer.getLastName() + "', FirstName = '"+this.customer.getFirstName()+
 					"' , Address = '"+ this.customer.getAddress() + "', ZipCode = '"+this.customer.getZipCode()+ 
-					"' , Telephone = '"+ this.customer.getTelephone() + "' WHERE SSN = "+this.customer.getCustomerID();
+					"' , Telephone = '"+ this.customer.getTelephone() + "' WHERE SSN = '"+this.customer.getCustomerID()+"'";
 		}else if(type.equals("Employee")) {
 			sql = "UPDATE 7nVxZhInjB.Person SET" + " Email = '"+ this.employee.getEmail() +
 					"' , LastName = '"+ this.employee.getLastName() + "', FirstName = '"+this.employee.getFirstName()+
 					"' , Address = '"+ this.employee.getAddress() + "', ZipCode = '"+this.employee.getZipCode()+ 
-					"' , Telephone = '"+ this.employee.getTelephone() + "' WHERE SSN = "+this.employee.getEmployeeID();
+					"' , Telephone = '"+ this.employee.getTelephone() + "' WHERE SSN = '"+this.employee.getEmployeeID()+"'";
 		}
 		return sql;
 	}
@@ -75,7 +76,7 @@ public class Update {
 		if(type.equals("Customer")) {
 			sql = "UPDATE 7nVxZhInjB.Customer SET" +
 				 "Rating = '"+this.customer.getRating()+
-				"' , CreditCardNumber = '"+ this.customer.getCreditCard() + "' WHERE SSN = "+this.customer.getCustomerID();
+				"' , CreditCardNumber = '"+ this.customer.getCreditCard() + "' WHERE SSN = '"+this.customer.getCustomerID()+"'";
 		}
 		return sql;
 	}
@@ -85,11 +86,11 @@ public class Update {
 		if(type.equals("Customer")) {
 			 sql = "UPDATE 7nVxZhInjB.Location SET" +
 					" City = '"+ this.customer.getCity() + "', State = '"+this.customer.getState()+
-					"' WHERE ZipCode = "+this.customer.getZipCode();
+					"' WHERE ZipCode = '"+this.customer.getZipCode()+"'";
 		}else if(type.equals("Employee")) {
 			sql = "UPDATE 7nVxZhInjB.Location SET" +
 					" City = '"+ this.employee.getCity() + "', State = '"+this.employee.getState()+
-					"' WHERE ZipCode = "+this.employee.getZipCode();
+					"' WHERE ZipCode = '"+this.employee.getZipCode()+"'";
 		}
 
 		
@@ -100,12 +101,12 @@ public class Update {
 		String sql ="";
 		if(type.equals("Customer")) {
 		sql = "UPDATE 7nVxZhInjB.Login SET" +
-				" Email = '"+ this.customer.getEmail() +
-				"' WHERE SSN = "+this.customer.getCustomerID();
+				" username = '"+ this.customer.getEmail() +
+				"' WHERE SSN = '"+this.customer.getCustomerID()+"'";
 		}else if(type.equals("Employee")) {
 			sql = "UPDATE 7nVxZhInjB.Login SET" +
-					" Email = '"+ this.employee.getEmail() +
-					"' WHERE SSN = "+this.employee.getEmployeeID();
+					" username = '"+ this.employee.getEmail() +
+					"' WHERE SSN = '"+this.employee.getEmployeeID()+"'";
 		}
 
 		return sql;
@@ -113,7 +114,7 @@ public class Update {
 	
 	public String updateEmployee(String type) {
 		String sql = "UPDATE 7nVxZhInjB.Employee SET" + " StartDate = '"+ this.employee.getStartDate() +
-				"' , HourlyRate = '"+ this.employee.getHourlyRate()  + "' WHERE SSN = "+this.employee.getEmployeeID();
+				"' , HourlyRate = '"+ this.employee.getHourlyRate()  + "' WHERE SSN = '"+this.employee.getEmployeeID()+"'";
 		return sql;
 	}
 }

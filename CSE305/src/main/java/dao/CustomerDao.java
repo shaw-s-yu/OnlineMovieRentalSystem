@@ -232,8 +232,8 @@ public class CustomerDao {
 		
 		Connection conn = null;
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Customer WHERE CustomerId = "
-					+ customerID;
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Customer WHERE CustomerId = '"
+					+ customerID + "'";
 
 			// Connect to data base
 			conn = DBAccessHelper.getDAO().getConnection();
@@ -261,8 +261,8 @@ public class CustomerDao {
 		}
 		
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Person WHERE SSN = "
-					+ customerID;
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Person WHERE SSN = '"
+					+ customerID +"'";
 
 			// Connect to data base
 			conn = DBAccessHelper.getDAO().getConnection();
@@ -290,8 +290,8 @@ public class CustomerDao {
 		}
 		
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Account WHERE CustomerId = "
-					+ customerID;
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Account WHERE CustomerId = '"
+					+ customerID + "'";
 
 			// Connect to data base
 			conn = DBAccessHelper.getDAO().getConnection();
@@ -307,6 +307,35 @@ public class CustomerDao {
 				e1.printStackTrace();
 			}
 		}
+		try {
+			String sqlstr = "DELETE FROM 7nVxZhInjB.Login WHERE SSN = '"
+					+ customerID +"'";
+
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			DBAccessHelper.getDAO().execute(sqlstr, conn);
+
+		}catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 
 		return "success";
 		
@@ -430,7 +459,7 @@ public class CustomerDao {
 			customer.getCreditCard());
 		
 		queries[3] = String.format("INSERT INTO  7nVxZhInjB.Login " +
-				"values(null, \'%s\',\'%s\', \'%s\', \'%s\');",
+				"values(\'%s\',\'%s\', \'%s\', \'%s\');",
 			customer.getEmail(),
 			customer.getPassword(),
 			Integer.toString(0),
