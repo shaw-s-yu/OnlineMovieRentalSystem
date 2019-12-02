@@ -313,6 +313,7 @@ public class CustomerDao {
 	}
 
 
+	
 	public String getCustomerID(String username) {
 		/*
 		 * This method returns the Customer's ID based on the provided email address
@@ -324,17 +325,20 @@ public class CustomerDao {
 		String customerID = null;
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT CustomerId " + " FROM 7nVxZhInjB.Person "
-					+ " WHERE Email = " + username;
+			String sqlstr = "SELECT SSN " + " FROM 7nVxZhInjB.Person "
+					+ " WHERE Email = '" + username + "'";
 
 			ResultSet rs = null;
 			// Connect to data base
 			conn = DBAccessHelper.getDAO().getConnection();
 			// executeQuery string
 			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
-
+			if(rs == null){
+				System.out.println("Failed. rs is null. Query is wrong");
+				return null;
+			}
 			if (rs.next()) {
-				customerID = rs.getString("CustomerId");
+				customerID = rs.getString("SSN");
 			}
 
 		} catch (SQLException e) {
