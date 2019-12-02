@@ -366,15 +366,54 @@ public class MovieDao {
 
 		List<Movie> movies = new ArrayList<Movie>();
 		
-		/*Sample data begins*/
-		for (int i = 0; i < 4; i++) {
-			Movie movie = new Movie();
-			movie.setMovieID(1);
-			movie.setMovieName("The Godfather");
-			movie.setMovieType("Drama");
-			movies.add(movie);
+		System.out.println(customerID);
+		
+		Connection conn = null;
+		try {
+			String sqlstr = "SELECT 7nVxZhInjB.Movie.* FROM 7nVxZhInjB.Movie "+
+					"WHERE Type IN ("+
+					"SELECT Type FROM 7nVxZhInjB.Movie M, 7nVxZhInjB.MovieOrder O , 7nVxZhInjB.Account A "+
+					"WHERE M.Id = O.MovieId AND O.AccountNumber = A.Id AND A.CustomerId = '"+customerID+"') "+
+					"ORDER BY Rating DESC";
+
+			ResultSet rs = null;
+			// Connect to data base
+			conn = DBAccessHelper.getDAO().getConnection();
+			// executeQuery string
+			rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+			if(rs == null){
+				System.out.println("Failed. rs is null. Query is wrong");
+				return null;
+			}
+			while (rs.next()) {
+				Movie movie = new Movie();
+				movie.setMovieID(rs.getInt("Id"));
+				movie.setMovieName(rs.getString("Name"));
+				movie.setMovieType(rs.getString("Type"));
+				movie.setDistFee(rs.getInt("DistrFee"));
+				movie.setNumCopies(rs.getInt("NumCopies"));
+				movie.setRating(rs.getInt("Rating"));
+				movies.add(movie);
+			}
+
+		} catch (SQLException e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-		/*Sample data ends*/
 		
 		return movies;
 
