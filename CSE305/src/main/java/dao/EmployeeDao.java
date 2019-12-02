@@ -399,14 +399,6 @@ public class EmployeeDao {
 		 */
 		
 		Employee employee = new Employee();
-		
-		/*Sample data begins*/
-		employee.setEmail("shiyong@cs.sunysb.edu");
-		employee.setFirstName("Shiyong");
-		employee.setLastName("Lu");
-		employee.setEmployeeID("631-413-5555");
-		/*Sample data ends*/
-		
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
