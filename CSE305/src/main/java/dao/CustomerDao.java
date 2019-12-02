@@ -399,6 +399,65 @@ public class CustomerDao {
 		 * The sample code returns "success" by default.
 		 * You need to handle the database insertion of the customer details and return "success" or "failure" based on result of the database insertion.
 		 */
+		Connection conn = null;
+		
+		String[] queries = new String[4];
+		
+		queries[0] = String.format("INSERT INTO  7nVxZhInjB.Location " +
+				"values(\'%s\',\'%s\', \'%s\');",
+			Integer.toString(customer.getZipCode()),
+			customer.getCity(),
+			customer.getState());
+		
+		queries[1] = String.format("INSERT INTO  7nVxZhInjB.Person " +
+				"values(\'%s\',\'%s\', \'%s\', \'%s\', %s, \'%s\' ,\'%s\')",
+			customer.getCustomerID(),
+			customer.getLastName(),
+			customer.getFirstName(),
+			customer.getAddress(),
+			customer.getZipCode(),
+			customer.getTelephone(),
+			customer.getEmail());
+		
+		queries[2] = String.format("INSERT INTO  7nVxZhInjB.Customer " +
+				"values(\'%s\',\'%s\', \'%s\');",
+			customer.getCustomerID(),
+			Integer.toString(customer.getRating()),
+			customer.getCreditCard());
+		
+		queries[3] = String.format("INSERT INTO  7nVxZhInjB.Login " +
+				"values(null, \'%s\',\'%s\', \'%s\', \'%s\');",
+			customer.getEmail(),
+			customer.getPassword(),
+			Integer.toString(0),
+			customer.getCustomerID());
+		
+		try {
+			
+			conn = DBAccessHelper.getDAO().getConnection();
+			for(int i=0; i<queries.length;i++) {
+				System.out.println(queries[i]);
+				DBAccessHelper.getDAO().execute(queries[i], conn);
+			}					
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
 		/*Sample data begins*/
 		return "success";

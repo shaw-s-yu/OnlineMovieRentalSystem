@@ -18,6 +18,7 @@ public class Customer {
 	private String email;
 	private String creditCard;
 	private int rating;
+	private String password;
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -83,6 +84,12 @@ public class Customer {
 	}
 	public void setRating(int rating) {
 		this.rating = rating;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	@Override
 	public String toString() {
