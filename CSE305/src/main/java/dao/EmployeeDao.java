@@ -24,6 +24,68 @@ public class EmployeeDao {
 		 * You need to handle the database insertion of the employee details and return "success" or "failure" based on result of the database insertion.
 		 */
 		
+		Connection conn = null;
+		
+		String[] queries = new String[4];
+		
+		queries[0] = String.format("INSERT INTO  7nVxZhInjB.Location " +
+				"values(\'%s\',\'%s\', \'%s\');",
+			Integer.toString(employee.getZipCode()),
+			employee.getCity(),
+			employee.getState());
+		
+		queries[1] = String.format("INSERT INTO  7nVxZhInjB.Person " +
+				"values(\'%s\',\'%s\', \'%s\', \'%s\', %s, \'%s\' ,\'%s\')",
+				employee.getEmployeeID(),
+				employee.getLastName(),
+				employee.getFirstName(),
+				employee.getAddress(),
+				employee.getZipCode(),
+				employee.getTelephone(),
+				employee.getEmail());
+		
+		queries[2] = String.format("INSERT INTO  7nVxZhInjB.Employee " +
+				"values(\'%s\', \'%s\',\'%s\', \'%s\',\'%s\');",
+				employee.getEmployeeID(),
+				employee.getEmployeeID(),
+			employee.getStartDate(),
+			employee.getHourlyRate(),
+			employee.getLevel());
+		
+		queries[3] = String.format("INSERT INTO  7nVxZhInjB.Login " +
+				"values(\'%s\',\'%s\', \'%s\', \'%s\');",
+				employee.getEmail(),
+				employee.getPassword(),
+			Integer.toString(1), // representatives
+			employee.getEmployeeID());
+		
+		try {
+			
+			conn = DBAccessHelper.getDAO().getConnection();
+			for(int i=0; i<queries.length;i++) {
+				System.out.println(queries[i]);
+				DBAccessHelper.getDAO().execute(queries[i], conn);
+			}					
+		} catch (Exception e) {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return "failure";
+		} finally {
+			// close connection
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 		/*Sample data begins*/
 		return "success";
 		/*Sample data ends*/
