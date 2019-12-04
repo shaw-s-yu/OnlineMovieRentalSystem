@@ -438,7 +438,7 @@ public class CustomerDao {
 		 * This method fetches the all seller details and returns it
 		 * The students code to fetch data from the database will be written here
 		 * The seller (which is a customer) record is required to be encapsulated as a "Customer" class object and added to the "customers" List
-		 */
+		 */ 
 
 		List<Customer> customers = new ArrayList<Customer>();
 		
