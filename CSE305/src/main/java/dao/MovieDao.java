@@ -487,30 +487,70 @@ public class MovieDao {
 		  
 		 }
 	
-public List<Movie> getQueueOfMovies(String customerID){
-		
-		/*
-		 * The students code to fetch data from the database will be written here
-		 * Query to fetch movie queue for a customer, indicated by customerID, must be implemented
-		 * customerID, which is the Customer's ID for whom movie queue are fetched, is given as method parameter
-		 * Each record is required to be encapsulated as a "Movie" class object and added to the "movies" ArrayList
-		 */
+	public List<Movie> getQueueOfMovies(String customerID){
+		  
+		  /*
+		   * The students code to fetch data from the database will be written here
+		   * Query to fetch movie queue for a customer, indicated by customerID, must be implemented
+		   * customerID, which is the Customer's ID for whom movie queue are fetched, is given as method parameter
+		   * Each record is required to be encapsulated as a "Movie" class object and added to the "movies" ArrayList
+		   */
 
-		List<Movie> movies = new ArrayList<Movie>();
-		/*Sample data begins*/
-		for (int i = 0; i < 4; i++) {
-			Movie movie = new Movie();
-			movie.setMovieID(1);
-			movie.setMovieName("The Godfather");
-			movie.setMovieType("Drama");
-			movies.add(movie);
-		}
-		/*Sample data ends*/
-		
-		return movies;
-		
-		
-		
+		 List<Movie> movies = new ArrayList<Movie>();
+		 
+		 Connection conn = null;
+		 //System.out.println("here");
+		 try {
+		  String sqlstr = "SELECT 7nVxZhInjB.Movie.* FROM 7nVxZhInjB.Movie,7nVxZhInjB.MovieQ,7nVxZhInjB.Customer,7nVxZhInjB.Account "+
+		    "WHERE 7nVxZhInjB.Customer.CustomerId= '"+customerID+"' AND 7nVxZhInjB.Customer.CustomerId = 7nVxZhInjB.Account.CustomerId AND 7nVxZhInjB.Account.Id = 7nVxZhInjB.MovieQ.AccountId AND 7nVxZhInjB.MovieQ.MovieId = 7nVxZhInjB.Movie.Id "
+		    +"GROUP BY 7nVxZhInjB.Movie.Id "
+		    +"ORDER BY 7nVxZhInjB.Movie.Id ASC "
+		    ;
+
+		  ResultSet rs = null;
+		  // Connect to data base
+		  conn = DBAccessHelper.getDAO().getConnection();
+		  // executeQuery string
+		  rs = DBAccessHelper.getDAO().executeQuery(sqlstr, conn);
+		  if(rs == null){
+		   System.out.println("Failed. rs is null. Query is wrong");
+		   return null;
+		  }
+		  
+		  while (rs.next()) {
+		   Movie movie = new Movie();
+		   movie.setMovieID(rs.getInt("Id"));
+		   movie.setMovieName(rs.getString("Name"));
+		   movie.setMovieType(rs.getString("Type"));
+		   movie.setDistFee(rs.getInt("DistrFee"));
+		   movie.setNumCopies(rs.getInt("NumCopies"));
+		   movie.setRating(rs.getInt("Rating"));
+		   movies.add(movie);
+		  }
+
+		 } catch (SQLException e) {
+		  // close connection
+		  try {
+		   if (conn != null)
+		    conn.close();
+		  } catch (SQLException e1) {
+		   e1.printStackTrace();
+		  }
+		  e.printStackTrace();
+		 } finally {
+		  // close connection
+		  try {
+		   if (conn != null)
+		    conn.close();
+		  } catch (SQLException e1) {
+		   e1.printStackTrace();
+		  }
+		 }
+		 
+		 return movies;
+		  
+		  
+		  
 	}
 	
 	
