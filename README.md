@@ -11,6 +11,7 @@ password: Fuckdamn123
 1. updated editMovie.jsp: need an extra input textfield for movieID, and added set MovieId in updateMovieController.java, otherwise moviedao.java cannot get movieid for sql query.
 2. updated managerHome.jsp: typos displayed in manage movie section, should be movie but appears as employee 
 3. updated BUG in searchMovieByActorController.java: should call getMoviesByActor but appears as getMoviesByName
+4. updated index.jsp, home.jsp, managerHome,jsp, customerRepresentativeHome.jsp add if(email!=null || role!=null): redirect to login page if not already logged in.
 
 ### TEAM
 1.Shenghui Yu(shenghui.yu@stonybrook.edu) <br>
