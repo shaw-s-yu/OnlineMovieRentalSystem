@@ -29,7 +29,7 @@ public class OrderDao {
 		Connection conn = null;
 		try {
 			String sqlstr = 
-					"SELECT  * FROM  7nVxZhInjB.MovieOrder";
+					"SELECT  * FROM  MovieOrder";
 
 			ResultSet rs = null;
 			// Connect to data base
@@ -82,7 +82,7 @@ public class OrderDao {
 		Connection conn = null;
 		try {
 			String sqlstr = 
-					"SELECT  * FROM  7nVxZhInjB.MovieOrder";
+					"SELECT  * FROM  MovieOrder";
 
 			ResultSet rs = null;
 			// Connect to data base
@@ -136,8 +136,8 @@ public class OrderDao {
 		Connection conn = null;
 		try {
 			String sqlstr = 
-					"SELECT  * FROM  7nVxZhInjB.MovieOrder WHERE MovieId IN ("+
-					"SELECT R.MovieId FROM 7nVxZhInjB.Rental R, 7nVxZhInjB.Employee E, 7nVxZhInjB.Person P "+ 
+					"SELECT  * FROM  MovieOrder WHERE MovieId IN ("+
+					"SELECT R.MovieId FROM Rental R, Employee E, Person P "+ 
 					"WHERE R.CustRepId = E.Id AND E.SSN = P.SSN AND P.Email = '"+employeeEmail+"')";
 			System.out.println(sqlstr);
 			ResultSet rs = null;
@@ -191,7 +191,7 @@ public class OrderDao {
 		
 		Date date = new Date();
 		String returnDate = (date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDate();
-		String sqlstr = "UPDATE 7nVxZhInjB.MovieOrder SET returnDate = '"+returnDate+"' WHERE id = '"+orderID+"'";
+		String sqlstr = "UPDATE MovieOrder SET returnDate = '"+returnDate+"' WHERE id = '"+orderID+"'";
 		
 		
 		Connection conn = null;
@@ -235,8 +235,8 @@ public class OrderDao {
 		  Connection conn = null;
 		  //System.out.println("here");
 		  try {
-		   String sqlstr = "SELECT 7nVxZhInjB.Rental.* FROM  7nVxZhInjB.Rental,7nVxZhInjB.Account,7nVxZhInjB.Customer "+
-		     "WHERE 7nVxZhInjB.Rental.AccountId = 7nVxZhInjB.Account.Id AND 7nVxZhInjB.Account.CustomerId =7nVxZhInjB.Customer.CustomerId AND 7nVxZhInjB.Customer.CustomerId = "+customerID
+		   String sqlstr = "SELECT Rental.* FROM  Rental,Account,Customer "+
+		     "WHERE Rental.AccountId = Account.Id AND Account.CustomerId =Customer.CustomerId AND Customer.CustomerId = "+customerID
 		     ;
 
 		   ResultSet rs = null;

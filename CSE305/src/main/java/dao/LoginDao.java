@@ -27,7 +27,7 @@ public class LoginDao {
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Login WHERE username = '"
+			String sqlstr = "SELECT * FROM Login WHERE username = '"
 					+ username +"' AND password = '" + password +"'";
 
 			// Connect to data base

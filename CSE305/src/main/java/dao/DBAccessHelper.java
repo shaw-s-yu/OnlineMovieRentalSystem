@@ -12,9 +12,9 @@ import java.sql.SQLException;
 public class DBAccessHelper {
 	private static DBAccessHelper dao;
 	public static final String DRIVER_MYSQ = "com.mysql.cj.jdbc.Driver";
-	public static final String url = "jdbc:mysql://remotemysql.com:3306/?user=7nVxZhInjB";
-	public static final String name = "7nVxZhInjB";
-	public static final String pass = "J2q22YGyY6";
+	public static final String url = "jdbc:mysql://localhost:3306/sys";
+	public static final String name = "root";
+	public static final String pass = "Fuckdamn123";
 
 	//loading Driver
 	private DBAccessHelper() {

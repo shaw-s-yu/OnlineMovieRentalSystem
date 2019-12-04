@@ -28,7 +28,7 @@ public class AccountDao {
 					
 			Connection conn = null;
 			try {
-				String sqlstr = "SELECT * FROM 7nVxZhInjB.Account WHERE DateOpened >= '"+ date[1]+"-"+date[0] + "'";
+				String sqlstr = "SELECT * FROM Account WHERE DateOpened >= '"+ date[1]+"-"+(date[0]+1)+"-01" + "'";
 				System.out.println(sqlstr);
 				ResultSet rs = null;
 				// Connect to data base
@@ -76,9 +76,9 @@ public class AccountDao {
 //		  Account account = new Account();
 		  try {
 		   String sqlstr = 
-		     "UPDATE  7nVxZhInjB.Account "+
+		     "UPDATE  Account "+
 		     "SET AccountType = '" + accountType + "' "+
-		     "WHERE 7nVxZhInjB.Account.CustomerId = "+ customerID;
+		     "WHERE Account.CustomerId = "+ customerID;
 
 		   ResultSet rs = null;
 		   // Connect to data base

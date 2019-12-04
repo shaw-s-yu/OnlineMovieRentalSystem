@@ -35,7 +35,7 @@ public class CustomerDao {
 		try {
 			String sqlstr = 
 					"SELECT  P.SSN, P.Address, P.LastName, P.FirstName, L.City, L.State, P.Email, P.ZipCode, P.Telephone, C.CreditCardNumber, C.Rating "+
-					"FROM 7nVxZhInjB.Location L, 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C "+
+					"FROM Location L, Person P, Customer C "+
 					"where L.ZipCode = P.ZipCode and C.CustomerId = P.SSN ";
 
 			ResultSet rs = null;
@@ -95,7 +95,7 @@ public class CustomerDao {
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
-			String sqlstr = "SELECT ((year(NOW())*12+month(NOW())) - (year(DateOpened)*12+month(DateOpened)))*BookingFee AS result, CustomerId FROM 7nVxZhInjB.Account ORDER BY result DESC LIMIT 1";  
+			String sqlstr = "SELECT ((year(NOW())*12+month(NOW())) - (year(DateOpened)*12+month(DateOpened)))*BookingFee AS result, CustomerId FROM Account ORDER BY result DESC LIMIT 1";  
 			// Connect to data base
 			conn = DBAccessHelper.getDAO().getConnection();
 			
@@ -149,7 +149,7 @@ public class CustomerDao {
 		try {
 			String sqlstr = 
 					"SELECT P.SSN, P.FirstName, P.LastName, P.Address, L.State, L.City, L.ZipCode, P.Email "+
-					"FROM 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C, 7nVxZhInjB.Location L "+
+					"FROM Person P, Customer C, Location L "+
 					"WHERE P.SSN = C.CustomerId AND P.ZipCode = L.ZipCode ";
 
 			ResultSet rs = null;
@@ -208,7 +208,7 @@ public class CustomerDao {
 		try {
 			String sqlstr = 
 					"SELECT  P.SSN, P.Address, P.LastName, P.FirstName, L.City, L.State, P.Email, P.ZipCode, P.Telephone, C.CreditCardNumber, C.Rating "+
-					"FROM 7nVxZhInjB.Location L, 7nVxZhInjB.Person P, 7nVxZhInjB.Customer C "+
+					"FROM Location L, Person P, Customer C "+
 					"where L.ZipCode = P.ZipCode and C.CustomerId = P.SSN and P.SSN = '"+ customerID+"'";
 
 			ResultSet rs = null;
@@ -269,7 +269,7 @@ public class CustomerDao {
 		
 		Connection conn = null;
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Customer WHERE CustomerId = '"
+			String sqlstr = "DELETE FROM Customer WHERE CustomerId = '"
 					+ customerID + "'";
 
 			// Connect to data base
@@ -298,7 +298,7 @@ public class CustomerDao {
 		}
 		
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Person WHERE SSN = '"
+			String sqlstr = "DELETE FROM Person WHERE SSN = '"
 					+ customerID +"'";
 
 			// Connect to data base
@@ -327,7 +327,7 @@ public class CustomerDao {
 		}
 		
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Account WHERE CustomerId = '"
+			String sqlstr = "DELETE FROM Account WHERE CustomerId = '"
 					+ customerID + "'";
 
 			// Connect to data base
@@ -345,7 +345,7 @@ public class CustomerDao {
 			}
 		}
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Login WHERE SSN = '"
+			String sqlstr = "DELETE FROM Login WHERE SSN = '"
 					+ customerID +"'";
 
 			// Connect to data base
@@ -391,7 +391,7 @@ public class CustomerDao {
 		String customerID = null;
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT SSN " + " FROM 7nVxZhInjB.Person "
+			String sqlstr = "SELECT SSN " + " FROM Person "
 					+ " WHERE Email = '" + username + "'";
 
 			ResultSet rs = null;
@@ -475,13 +475,13 @@ public class CustomerDao {
 		
 		String[] queries = new String[4];
 		
-		queries[0] = String.format("INSERT INTO  7nVxZhInjB.Location " +
+		queries[0] = String.format("INSERT INTO  Location " +
 				"values(\'%s\',\'%s\', \'%s\');",
 			Integer.toString(customer.getZipCode()),
 			customer.getCity(),
 			customer.getState());
 		
-		queries[1] = String.format("INSERT INTO  7nVxZhInjB.Person " +
+		queries[1] = String.format("INSERT INTO  Person " +
 				"values(\'%s\',\'%s\', \'%s\', \'%s\', %s, \'%s\' ,\'%s\')",
 			customer.getCustomerID(),
 			customer.getLastName(),
@@ -491,13 +491,13 @@ public class CustomerDao {
 			customer.getTelephone(),
 			customer.getEmail());
 		
-		queries[2] = String.format("INSERT INTO  7nVxZhInjB.Customer " +
+		queries[2] = String.format("INSERT INTO  Customer " +
 				"values(\'%s\',\'%s\', \'%s\');",
 			customer.getCustomerID(),
 			Integer.toString(customer.getRating()),
 			customer.getCreditCard());
 		
-		queries[3] = String.format("INSERT INTO  7nVxZhInjB.Login " +
+		queries[3] = String.format("INSERT INTO  Login " +
 				"values(\'%s\',\'%s\', \'%s\', \'%s\');",
 				customer.getCustomerID(),
 			customer.getEmail(),

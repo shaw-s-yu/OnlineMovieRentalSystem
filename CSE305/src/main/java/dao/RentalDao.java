@@ -17,8 +17,8 @@ public class RentalDao {
 		  Connection conn = null;
 		  //System.out.println("here");
 		  try {
-		   String sqlstr = "SELECT 7nVxZhInjB.Rental.* FROM  7nVxZhInjB.Rental,7nVxZhInjB.Account,7nVxZhInjB.Customer "+
-		     "WHERE 7nVxZhInjB.Rental.AccountId = 7nVxZhInjB.Account.Id AND 7nVxZhInjB.Account.CustomerId =7nVxZhInjB.Customer.CustomerId AND 7nVxZhInjB.Customer.CustomerId = "+customerID
+		   String sqlstr = "SELECT Rental.* FROM  Rental,Account,Customer "+
+		     "WHERE Rental.AccountId = Account.Id AND Account.CustomerId =Customer.CustomerId AND Customer.CustomerId = "+customerID
 		     ;
 
 		   ResultSet rs = null;

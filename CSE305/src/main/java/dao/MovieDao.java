@@ -28,7 +28,7 @@ public class MovieDao {
 		Connection conn = null;
 		try {
 			String sqlstr = 
-					"SELECT  * FROM  7nVxZhInjB.Movie";
+					"SELECT  * FROM  Movie";
 
 			ResultSet rs = null;
 			// Connect to data base
@@ -83,7 +83,7 @@ public class MovieDao {
 
 		try {
 			String sqlstr = 
-					"SELECT  * FROM  7nVxZhInjB.Movie WHERE Id = " + movieID;
+					"SELECT  * FROM  Movie WHERE Id = " + movieID;
 
 			ResultSet rs = null;
 			// Connect to data base
@@ -137,7 +137,7 @@ public class MovieDao {
 		
 		String[] queries = new String[1];
 		
-		queries[0] = String.format("INSERT INTO  7nVxZhInjB.Movie " +
+		queries[0] = String.format("INSERT INTO  Movie " +
 				"values(null, \'%s\',\'%s\', \'%s\', \'%s\', \'%s\');",
 				movie.getMovieName(),
 				movie.getMovieType(),
@@ -229,7 +229,7 @@ public class MovieDao {
 		 */
 		Connection conn = null;
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Movie WHERE Id = '"
+			String sqlstr = "DELETE FROM Movie WHERE Id = '"
 					+ movieID + "'";
 
 			// Connect to data base
@@ -276,8 +276,8 @@ public class MovieDao {
 		
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT 7nVxZhInjB.Movie.*, DistrFee*COUNT(MovieId) FROM 7nVxZhInjB.Movie, 7nVxZhInjB.MovieOrder "+
-					"WHERE MovieId = 7nVxZhInjB.Movie.Id "+
+			String sqlstr = "SELECT Movie.*, DistrFee*COUNT(MovieId) FROM Movie, MovieOrder "+
+					"WHERE MovieId = Movie.Id "+
 					"GROUP BY MovieId "+
 					"ORDER BY DistrFee*COUNT(MovieId) DESC";
 
@@ -370,9 +370,9 @@ public class MovieDao {
 		
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT 7nVxZhInjB.Movie.* FROM 7nVxZhInjB.Movie "+
+			String sqlstr = "SELECT Movie.* FROM Movie "+
 					"WHERE Type IN ("+
-					"SELECT Type FROM 7nVxZhInjB.Movie M, 7nVxZhInjB.MovieOrder O , 7nVxZhInjB.Account A "+
+					"SELECT Type FROM Movie M, MovieOrder O , Account A "+
 					"WHERE M.Id = O.MovieId AND O.AccountNumber = A.Id AND A.CustomerId = '"+customerID+"') "+
 					"ORDER BY Rating DESC";
 
@@ -434,8 +434,8 @@ public class MovieDao {
 		  Connection conn = null;
 		  //System.out.println("here");
 		  try {
-		   String sqlstr = "SELECT 7nVxZhInjB.Movie.* FROM 7nVxZhInjB.Movie, 7nVxZhInjB.MovieOrder, 7nVxZhInjB.Customer, 7nVxZhInjB.Account "+
-		     "WHERE 7nVxZhInjB.MovieOrder.ReturnDate IS NULL AND "+"7nVxZhInjB.Customer.CustomerId='"+customerID+"' AND 7nVxZhInjB.Customer.CustomerId = 7nVxZhInjB.Account.CustomerId AND 7nVxZhInjB.Account.Id = 7nVxZhInjB.MovieOrder.AccountNumber AND 7nVxZhInjB.Movie.Id = 7nVxZhInjB.MovieOrder.MovieId "+
+		   String sqlstr = "SELECT Movie.* FROM Movie, MovieOrder, Customer, Account "+
+		     "WHERE MovieOrder.ReturnDate IS NULL AND "+"Customer.CustomerId='"+customerID+"' AND Customer.CustomerId = Account.CustomerId AND Account.Id = MovieOrder.AccountNumber AND Movie.Id = MovieOrder.MovieId "+
 //		     "GROUP BY MovieId "+
 		     "ORDER BY MovieId DESC";
 
@@ -501,10 +501,10 @@ public class MovieDao {
 		 Connection conn = null;
 		 //System.out.println("here");
 		 try {
-		  String sqlstr = "SELECT 7nVxZhInjB.Movie.* FROM 7nVxZhInjB.Movie,7nVxZhInjB.MovieQ,7nVxZhInjB.Customer,7nVxZhInjB.Account "+
-		    "WHERE 7nVxZhInjB.Customer.CustomerId= '"+customerID+"' AND 7nVxZhInjB.Customer.CustomerId = 7nVxZhInjB.Account.CustomerId AND 7nVxZhInjB.Account.Id = 7nVxZhInjB.MovieQ.AccountId AND 7nVxZhInjB.MovieQ.MovieId = 7nVxZhInjB.Movie.Id "
-		    +"GROUP BY 7nVxZhInjB.Movie.Id "
-		    +"ORDER BY 7nVxZhInjB.Movie.Id ASC "
+		  String sqlstr = "SELECT Movie.* FROM Movie,MovieQ,Customer,Account "+
+		    "WHERE Customer.CustomerId= '"+customerID+"' AND Customer.CustomerId = Account.CustomerId AND Account.Id = MovieQ.AccountId AND MovieQ.MovieId = Movie.Id "
+		    +"GROUP BY Movie.Id "
+		    +"ORDER BY Movie.Id ASC "
 		    ;
 
 		  ResultSet rs = null;
@@ -647,7 +647,7 @@ public class MovieDao {
 				
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Movie WHERE NAME LIKE '%"+movieName+"%'";
+			String sqlstr = "SELECT * FROM Movie WHERE NAME LIKE '%"+movieName+"%'";
 			System.out.println(sqlstr);
 			ResultSet rs = null;
 			// Connect to data base
@@ -708,8 +708,8 @@ public class MovieDao {
 		
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Movie WHERE Id IN ("+
-					"SELECT I.MovieId FROM 7nVxZhInjB.AppearedIn I, 7nVxZhInjB.Actor A WHERE A.Id = I.ActorId AND "+
+			String sqlstr = "SELECT * FROM Movie WHERE Id IN ("+
+					"SELECT I.MovieId FROM AppearedIn I, Actor A WHERE A.Id = I.ActorId AND "+
 					"A.Name LIKE '%"+actorName+"%')";
 			System.out.println(sqlstr);
 			ResultSet rs = null;
@@ -770,7 +770,7 @@ public class MovieDao {
 		
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Movie WHERE Type = '" + movieType +"'";
+			String sqlstr = "SELECT * FROM Movie WHERE Type = '" + movieType +"'";
 
 			ResultSet rs = null;
 			// Connect to data base
@@ -822,7 +822,7 @@ public class MovieDao {
 		
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Movie WHERE Name LIKE '%"+movieName+"%'";
+			String sqlstr = "SELECT * FROM Movie WHERE Name LIKE '%"+movieName+"%'";
 
 			ResultSet rs = null;
 			// Connect to data base
@@ -874,8 +874,8 @@ public class MovieDao {
 		
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Movie WHERE Id IN ("+
-					"SELECT Q.MovieId FROM 7nVxZhInjB.MovieQ Q, 7nVxZhInjB.Person P, 7nVxZhInjB.Account A "+
+			String sqlstr = "SELECT * FROM Movie WHERE Id IN ("+
+					"SELECT Q.MovieId FROM MovieQ Q, Person P, Account A "+
 					"WHERE A.Id = Q.AccountId AND A.CustomerId = P.SSN AND "+
 					"(P.LastName LIKE '%"+customerName+"%' OR P.FirstName LIKE '%"+customerName+"%'))";
 
@@ -930,7 +930,7 @@ public class MovieDao {
 		
 		Connection conn = null;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Movie WHERE Type = '" + movieType +"'";
+			String sqlstr = "SELECT * FROM Movie WHERE Type = '" + movieType +"'";
 
 			ResultSet rs = null;
 			// Connect to data base

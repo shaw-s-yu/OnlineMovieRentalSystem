@@ -28,13 +28,13 @@ public class EmployeeDao {
 		
 		String[] queries = new String[4];
 		
-		queries[0] = String.format("INSERT INTO  7nVxZhInjB.Location " +
+		queries[0] = String.format("INSERT INTO  Location " +
 				"values(\'%s\',\'%s\', \'%s\');",
 			Integer.toString(employee.getZipCode()),
 			employee.getCity(),
 			employee.getState());
 		
-		queries[1] = String.format("INSERT INTO  7nVxZhInjB.Person " +
+		queries[1] = String.format("INSERT INTO  Person " +
 				"values(\'%s\',\'%s\', \'%s\', \'%s\', %s, \'%s\' ,\'%s\')",
 				employee.getEmployeeID(),
 				employee.getLastName(),
@@ -44,7 +44,7 @@ public class EmployeeDao {
 				employee.getTelephone(),
 				employee.getEmail());
 		
-		queries[2] = String.format("INSERT INTO  7nVxZhInjB.Employee " +
+		queries[2] = String.format("INSERT INTO  Employee " +
 				"values(\'%s\', \'%s\',\'%s\', \'%s\',\'%s\');",
 				employee.getEmployeeID(),
 				employee.getEmployeeID(),
@@ -52,7 +52,7 @@ public class EmployeeDao {
 			employee.getHourlyRate(),
 			employee.getLevel());
 		
-		queries[3] = String.format("INSERT INTO  7nVxZhInjB.Login " +
+		queries[3] = String.format("INSERT INTO  Login " +
 				"values(\'%s\',\'%s\', \'%s\', \'%s\');",
 				employee.getEmployeeID(),
 				employee.getEmail(),
@@ -143,7 +143,7 @@ public class EmployeeDao {
 		 */
 		Connection conn = null;
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Employee WHERE SSN = '"
+			String sqlstr = "DELETE FROM Employee WHERE SSN = '"
 					+ employeeID +"'";
 
 			// Connect to data base
@@ -172,7 +172,7 @@ public class EmployeeDao {
 		}
 		
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Person WHERE SSN = '"
+			String sqlstr = "DELETE FROM Person WHERE SSN = '"
 					+ employeeID +"'";
 
 			// Connect to data base
@@ -201,7 +201,7 @@ public class EmployeeDao {
 		}
 		
 		try {
-			String sqlstr = "DELETE FROM 7nVxZhInjB.Login WHERE SSN = '"
+			String sqlstr = "DELETE FROM Login WHERE SSN = '"
 					+ employeeID +"'";
 
 			// Connect to data base
@@ -249,7 +249,7 @@ public class EmployeeDao {
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Employee";
+			String sqlstr = "SELECT * FROM Employee";
 
 			// Connect to data base
 			conn = DBAccessHelper.getDAO().getConnection();
@@ -302,10 +302,10 @@ public class EmployeeDao {
 		ResultSet rs2 = null;
 		int ZipCode = 123;
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Person WHERE SSN = '"
+			String sqlstr = "SELECT * FROM Person WHERE SSN = '"
 					+ employeeID +"'";
 			
-			String sqlstr2 = "SELECT * FROM 7nVxZhInjB.Employee WHERE SSN = '"
+			String sqlstr2 = "SELECT * FROM Employee WHERE SSN = '"
 					+ employeeID +"'";
 
 			// Connect to data base
@@ -356,7 +356,7 @@ public class EmployeeDao {
 		}
 		
 		try {
-			String sqlstr = "SELECT * FROM 7nVxZhInjB.Location WHERE ZipCode = '"
+			String sqlstr = "SELECT * FROM Location WHERE ZipCode = '"
 					+ ZipCode +"'";
 			
 
@@ -409,7 +409,7 @@ public class EmployeeDao {
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
-			String sqlstr = "SELECT CustRepId, COUNT(OrderId) FROM 7nVxZhInjB.Rental GROUP BY CustRepId HAVING COUNT(OrderId) = (SELECT MAX(count) FROM (SELECT CustRepId, COUNT(OrderId) As count FROM 7nVxZhInjB.Rental GROUP BY CustRepId)subquery)";
+			String sqlstr = "SELECT CustRepId, COUNT(OrderId) FROM Rental GROUP BY CustRepId HAVING COUNT(OrderId) = (SELECT MAX(count) FROM (SELECT CustRepId, COUNT(OrderId) As count FROM Rental GROUP BY CustRepId)subquery)";
 
 			// Connect to data base
 			conn = DBAccessHelper.getDAO().getConnection();
@@ -428,7 +428,7 @@ public class EmployeeDao {
 				
 				if (rs.next()) {
 					try {
-						sqlstr = "SELECT SSN FROM 7nVxZhInjB.Employee WHERE Id = '" + rs.getString("CustRepId") +"'";
+						sqlstr = "SELECT SSN FROM Employee WHERE Id = '" + rs.getString("CustRepId") +"'";
 						// Connect to data base
 						conn = DBAccessHelper.getDAO().getConnection();
 						ResultSet rs2 = null;
@@ -472,7 +472,7 @@ public class EmployeeDao {
 		ResultSet rs = null;
 		String employeeID = "";
 		try {
-			String sqlstr = "SELECT SSN FROM 7nVxZhInjB.Person WHERE Email = '"
+			String sqlstr = "SELECT SSN FROM Person WHERE Email = '"
 					+ username + "'";
 
 			// Connect to data base

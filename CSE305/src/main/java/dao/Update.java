@@ -47,7 +47,7 @@ public class Update {
 	}
 	
 	public String updateByMovie() {
-		String query = "UPDATE 7nVxZhInjB.Movie SET" + " Name ='" + this.movie.getMovieName()+
+		String query = "UPDATE Movie SET" + " Name ='" + this.movie.getMovieName()+
 				"' , Type = '"+this.movie.getMovieType()+"' , Rating = '"+this.movie.getRating()+
 				"' , DistrFee = '"+this.movie.getDistFee()+ "' , NumCopies = '"+this.movie.getNumCopies()+
 				"' WHERE Id = " + this.movie.getMovieID();
@@ -58,12 +58,12 @@ public class Update {
 
 		String sql ="";
 		if(type.equals("Customer")) {
-			sql = "UPDATE 7nVxZhInjB.Person SET" + " Email = '"+ this.customer.getEmail() +
+			sql = "UPDATE Person SET" + " Email = '"+ this.customer.getEmail() +
 					"' , LastName = '"+ this.customer.getLastName() + "', FirstName = '"+this.customer.getFirstName()+
 					"' , Address = '"+ this.customer.getAddress() + "', ZipCode = '"+this.customer.getZipCode()+ 
 					"' , Telephone = '"+ this.customer.getTelephone() + "' WHERE SSN = '"+this.customer.getCustomerID()+"'";
 		}else if(type.equals("Employee")) {
-			sql = "UPDATE 7nVxZhInjB.Person SET" + " Email = '"+ this.employee.getEmail() +
+			sql = "UPDATE Person SET" + " Email = '"+ this.employee.getEmail() +
 					"' , LastName = '"+ this.employee.getLastName() + "', FirstName = '"+this.employee.getFirstName()+
 					"' , Address = '"+ this.employee.getAddress() + "', ZipCode = '"+this.employee.getZipCode()+ 
 					"' , Telephone = '"+ this.employee.getTelephone() + "' WHERE SSN = '"+this.employee.getEmployeeID()+"'";
@@ -74,21 +74,22 @@ public class Update {
 	public String updateCustomer(String type) {
 		String sql ="";
 		if(type.equals("Customer")) {
-			sql = "UPDATE 7nVxZhInjB.Customer SET" +
-				 "Rating = '"+this.customer.getRating()+
-				"' , CreditCardNumber = '"+ this.customer.getCreditCard() + "' WHERE SSN = '"+this.customer.getCustomerID()+"'";
+			sql = "UPDATE Customer SET " +
+				 " Rating = '"+this.customer.getRating()+
+				"' , CreditCardNumber = '"+ this.customer.getCreditCard() + "' WHERE CustomerId = '"+this.customer.getCustomerID()+"'";
 		}
+		System.out.println(sql);
 		return sql;
 	}
 	
 	public String updateLocation(String type) {
 		String sql ="";
 		if(type.equals("Customer")) {
-			 sql = "UPDATE 7nVxZhInjB.Location SET" +
+			 sql = "UPDATE Location SET" +
 					" City = '"+ this.customer.getCity() + "', State = '"+this.customer.getState()+
 					"' WHERE ZipCode = '"+this.customer.getZipCode()+"'";
 		}else if(type.equals("Employee")) {
-			sql = "UPDATE 7nVxZhInjB.Location SET" +
+			sql = "UPDATE Location SET" +
 					" City = '"+ this.employee.getCity() + "', State = '"+this.employee.getState()+
 					"' WHERE ZipCode = '"+this.employee.getZipCode()+"'";
 		}
@@ -100,11 +101,11 @@ public class Update {
 	public String updateLogin(String type) {
 		String sql ="";
 		if(type.equals("Customer")) {
-		sql = "UPDATE 7nVxZhInjB.Login SET" +
+		sql = "UPDATE Login SET" +
 				" username = '"+ this.customer.getEmail() +
 				"' WHERE SSN = '"+this.customer.getCustomerID()+"'";
 		}else if(type.equals("Employee")) {
-			sql = "UPDATE 7nVxZhInjB.Login SET" +
+			sql = "UPDATE Login SET" +
 					" username = '"+ this.employee.getEmail() +
 					"' WHERE SSN = '"+this.employee.getEmployeeID()+"'";
 		}
@@ -113,7 +114,7 @@ public class Update {
 	}
 	
 	public String updateEmployee(String type) {
-		String sql = "UPDATE 7nVxZhInjB.Employee SET" + " StartDate = '"+ this.employee.getStartDate() +
+		String sql = "UPDATE Employee SET" + " StartDate = '"+ this.employee.getStartDate() +
 				"' , HourlyRate = '"+ this.employee.getHourlyRate()  + "' WHERE SSN = '"+this.employee.getEmployeeID()+"'";
 		return sql;
 	}
