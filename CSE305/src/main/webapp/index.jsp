@@ -17,7 +17,7 @@
 	</head>
 	<body>
 	
-		<h1>Welcome to the Online Movie Rental System</h1>
+		<h1>Welcome to the Online Movie Rental System!</h1>
 		<div class="container">
 			<h2>Login</h2>
 			<%
