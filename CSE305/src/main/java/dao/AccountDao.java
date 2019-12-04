@@ -72,13 +72,55 @@ public class AccountDao {
 		}
 	
 	public String setAccount(String customerID, String accountType) {
+		  Connection conn = null;
+//		  Account account = new Account();
+		  try {
+		   String sqlstr = 
+		     "UPDATE  7nVxZhInjB.Account "+
+		     "SET AccountType = '" + accountType + "' "+
+		     "WHERE 7nVxZhInjB.Account.CustomerId = "+ customerID;
 
-		
-		/*Sample data begins*/
-		return "success";
-		/*Sample data ends*/
+		   ResultSet rs = null;
+		   // Connect to data base
+		   conn = DBAccessHelper.getDAO().getConnection();
+		   // executeQuery string
+		   DBAccessHelper.getDAO().execute(sqlstr, conn);
 
-	}
-	
+//		   if (rs.next()) {
+//		    account.setAccountID(rs.getInt("Id"));
+//		    account.setAcctCreateDate(rs.getString("DateOpened"));
+//		    account.setAccountType(rs.getString("AccountType"));
+//		    account.setCustomerID(rs.getString("CustomerId"));
+
+//		   }
+
+
+		  } catch (Exception e) {
+		   // close connection
+		   try {
+		    if (conn != null)
+		     conn.close();
+		   } catch (SQLException e1) {
+		    e1.printStackTrace();
+		   }
+		   e.printStackTrace();
+		   return "failure";
+		  } finally {
+		   // close connection
+		   try {
+		    if (conn != null)
+		     conn.close();
+		   } catch (SQLException e1) {
+		    e1.printStackTrace();
+		   }
+		  }
+//		  System.out.println(account.getAccountID()+" "+account.getAccountType());
+//		  account.setAccountType(accountType);
+//		  System.out.println(account.getAccountID()+" "+account.getAccountType());
+		  /*Sample data begins*/
+		  return "success";
+		  /*Sample data ends*/
+
+		}
 
 }
