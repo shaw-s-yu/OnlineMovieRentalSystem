@@ -19,7 +19,7 @@ password: Fuckdamn123
 3.Haoyu Lu(haoyu.lu@stonybrook.edu)
 
 ### file
-our war file: OnlineMovieRentalSystem/document/YYL_PROJECT.war
+our war file: OnlineMovieRentalSystem/document/YYL_PROJECT.war <br>
 our database dump file: OnlineMovieRentalSystem/document/project.sql
 
 
