@@ -3,7 +3,7 @@
 ## Add mysql-connector-java-8.0.12.jar to tomcat/lib folder otherwise this app doesn't work
 
 ## sql database login:
-username: root
+username: root <br>
 password: Fuckdamn123
 
 
